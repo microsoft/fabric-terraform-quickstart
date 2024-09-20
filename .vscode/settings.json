@@ -1,0 +1,96 @@
+{
+  // files
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  // editor
+  "editor.inlineSuggest.enabled": true,
+  "editor.detectIndentation": true,
+  "editor.formatOnSave": true,
+  // git
+  "git.autorefresh": true,
+  "git.autofetch": true,
+  "git.fetchOnPull": true,
+  "git.pruneOnFetch": true,
+  "git.pullBeforeCheckout": true,
+  "git.branchProtection": [
+    "main"
+  ],
+  "git.mergeEditor": true,
+  "git.enableSmartCommit": true,
+  // github
+  "github.branchProtection": true,
+  "githubPullRequests.showPullRequestNumberInTree": true,
+  // yaml
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "yaml.format.singleQuote": false,
+  "yaml.schemaStore.enable": true,
+  // markdown
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
+  "markdownlint.config": {
+    "extends": "./.github/linters/.markdownlint.yml"
+  },
+  // go
+  "go.useLanguageServer": true,
+  "go.toolsManagement.autoUpdate": true,
+  "go.vetOnSave": "package",
+  "[go]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "golang.go",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  },
+  "[go.mod]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  },
+  "gopls": {
+    "formatting.gofumpt": true,
+    "ui.semanticTokens": true,
+    "ui.completion.usePlaceholders": true
+  },
+  "go.formatTool": "goimports",
+  "go.diagnostic.vulncheck": "Imports",
+  "go.testTimeout": "3m",
+  "linter.linters": {
+    "yamllint": {
+      "configFiles": [
+        ".github/linters/.yamllint.yml"
+      ]
+    },
+    "markdownlint": {
+      "configFiles": [
+        ".github/linters/.markdownlint.yml"
+      ]
+    },
+    "shellcheck": {
+      "configFiles": [
+        ".github/linters/.shellcheckrc"
+      ],
+      "command": [
+        "shellcheck",
+        "--format",
+        "json",
+        "--enable",
+        "all",
+        "--rcfile",
+        "$config",
+        "-"
+      ]
+    }
+  },
+  "shellcheck.customArgs": [
+    "--rcfile",
+    ".github/linters/.shellcheckrc"
+  ],
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "sarif-viewer.connectToGithubCodeScanning": "on"
+}

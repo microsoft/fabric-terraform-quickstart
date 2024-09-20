@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-issue-forms.json
+# https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
+---
+name: 💫 Quickstart Example Request
+description: Request a new quickstart example to be added to the Terraform Provider repository 📢
+title: "[guide] "
+labels: [guide]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 📝 Description
+      description: |
+        Short description here describing the new quick-start example that you're requesting.
+        Include a use case for why users need this example.
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 🔬 Details / References
+      description: Example Details
+      placeholder: |
+        - Proposed Name: (e.g. 101-my-example)
+        - Supporting documentation: <!-- links to product documentation (if public). -->
+        - Estimated complexity/effort: <!-- (e.g., easy, moderate, hard) -->
+        - Related resources/data sources: <!-- what data sources and/or resources will this example use? -->
+      value: |
+        - Proposed Name: (e.g. 101-my-example)
+        - Supporting documentation: <!-- links to product documentation (if public). -->
+        - Estimated complexity/effort: <!-- (e.g., easy, moderate, hard) -->
+        - Related resources/data sources: <!-- what data sources and/or resources will this example use? -->
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📎 Additional context
+      description: Add any other context or screenshots about the feature request here.
+      placeholder: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: done-definition
+    attributes:
+      label: ✅ Definition of Done
+      description: Necessary criteria for a task or feature to be considered complete.
+      options:
+        - label: Example in the ./quickstarts folder
+          required: false
+        - label: Example documentation in README.md
+          required: false
+        - label: Confirmation that you have manually tested this
+          required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 🔰 Code of Conduct
+      description: By submitting this issue, you agree to follow our [`Code of Conduct`](../blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct.
+          required: true
