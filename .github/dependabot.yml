@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
+
 # See GitHub's documentation for more information on this file:
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 ---
@@ -22,9 +23,8 @@ updates:
       prefix-development: chore
       include: scope
 
-
   - package-ecosystem: gomod
-    directory: quickstarts/401-testing-terratest
+    directory: /quickstarts/401-testing-terratest
     schedule:
       interval: daily
     commit-message:
@@ -33,27 +33,15 @@ updates:
       include: scope
 
   - package-ecosystem: terraform
-    directory: quickstarts/101-hello-fabric
+    directories:
+      - "/quickstarts/101-hello-fabric/*"
+      - "/quickstarts/102-fabric-capacity/*"
+      - "/quickstarts/301-testing-terraform/*"
     schedule:
       interval: daily
-    commit-message:
-      prefix: build
-      prefix-development: chore
-      include: scope
-
-  - package-ecosystem: terraform
-    directory: quickstarts/102-fabric-capacity
-    schedule:
-      interval: daily
-    commit-message:
-      prefix: build
-      prefix-development: chore
-      include: scope
-
-  - package-ecosystem: terraform
-    directory: quickstarts/301-testing-terraform
-    schedule:
-      interval: daily
+    groups:
+      all:
+        patterns: ["*"]
     commit-message:
       prefix: build
       prefix-development: chore
