@@ -14,7 +14,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/azuread/latest
     azuread = {
       source  = "hashicorp/azuread"
-      version = "2.53.1"
+      version = "3.0.1"
     }
     # https://registry.terraform.io/providers/microsoft/fabric/latest
     fabric = {
