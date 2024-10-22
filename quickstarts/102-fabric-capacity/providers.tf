@@ -9,7 +9,7 @@ terraform {
     # https://registry.terraform.io/providers/Azure/azapi/latest
     azapi = {
       source  = "Azure/azapi"
-      version = "1.15.0"
+      version = "2.0.1"
     }
     # https://registry.terraform.io/providers/hashicorp/azuread/latest
     azuread = {
