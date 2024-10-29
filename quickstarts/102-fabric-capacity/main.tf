@@ -48,6 +48,6 @@ data "fabric_capacity" "example" {
 # Create a Fabric Workspace.
 # https://registry.terraform.io/providers/microsoft/fabric/latest/docs/resources/workspace
 resource "fabric_workspace" "example" {
-  capacity     = data.fabric_capacity.example.id
+  capacity_id  = data.fabric_capacity.example.id
   display_name = "ws-${var.name}"
 }
