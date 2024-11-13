@@ -19,7 +19,7 @@ terraform {
     # https://registry.terraform.io/providers/microsoft/fabric/latest
     fabric = {
       source  = "microsoft/fabric"
-      version = "0.1.0-beta.4"
+      version = "0.1.0-beta.5"
     }
   }
 }
