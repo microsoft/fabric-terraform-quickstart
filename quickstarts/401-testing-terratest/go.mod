@@ -5,7 +5,7 @@ go 1.23.1
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.8.0
 	github.com/gruntwork-io/terratest v0.47.2
-	github.com/microsoft/fabric-sdk-go v0.1.0-beta.4
+	github.com/microsoft/fabric-sdk-go v0.1.0-beta.5
 	github.com/stretchr/testify v1.9.0
 )
 
@@ -15,7 +15,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v0.13.0 // indirect
 	cloud.google.com/go/storage v1.28.1 // indirect
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.14.0 // indirect
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.16.0 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.10.0 // indirect
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.2.2 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
