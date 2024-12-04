@@ -411,8 +411,8 @@ github.com/mattn/go-isatty v0.0.4/go.mod h1:M+lRXTBqGeGNdLjl/ufCoiOlB5xdOkqRJdNx
 github.com/mattn/go-runewidth v0.0.4/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
 github.com/mattn/go-zglob v0.0.2-0.20190814121620-e3c945676326 h1:ofNAzWCcyTALn2Zv40+8XitdzCgXY6e9qvXwN9W0YXg=
 github.com/mattn/go-zglob v0.0.2-0.20190814121620-e3c945676326/go.mod h1:9fxibJccNxU2cnpIKLRRFA7zX7qhkJIQWBb449FYHOo=
-github.com/microsoft/fabric-sdk-go v0.1.0-beta.5 h1:JtM5kSyBPRE2U4/zrfbZuc3XEi6P1faBkNQ/391pwqE=
-github.com/microsoft/fabric-sdk-go v0.1.0-beta.5/go.mod h1:4re/IWo01szDAJiy2/M2yorZdy9FT2Gc3mnQQzcj0xc=
+github.com/microsoft/fabric-sdk-go v0.1.0-beta.6 h1:g+YRV24++TIVcllhJvt/Km9+I9tRNqbKQQZX7w6oixs=
+github.com/microsoft/fabric-sdk-go v0.1.0-beta.6/go.mod h1:pziTuCDFt3fvWrkX2Mp5kUs/1ozLztCMX4uumUXz9zs=
 github.com/mitchellh/copystructure v1.2.0/go.mod h1:qLl+cE2AmVv+CoeAwDPye/v+N2HKCj9FbZEVFJRxO9s=
 github.com/mitchellh/go-homedir v1.1.0 h1:lukF9ziXFxDFPkA1vsr5zpc1XuPDn/wFntq5mG+4E0Y=
 github.com/mitchellh/go-homedir v1.1.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
