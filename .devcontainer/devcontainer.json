@@ -9,7 +9,7 @@
     // "ghcr.io/devcontainers/features/git:1": {
     //   "version": "latest"
     // },
-    "ghcr.io/meaningful-ooo/devcontainer-features/fish:1": {},
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:2": {},
     "ghcr.io/devcontainers/features/common-utils:2": {
       "configureZshAsDefaultShell": true
     },
