@@ -7,8 +7,3 @@ output "fabric_capacity" {
 output "fabric_gateway" {
   value = fabric_gateway.example
 }
-
-# Details of the Fabric Gateway Role Assignment
-output "fabric_gateway_role_assignment" {
-  value = fabric_gateway_role_assignment.example
-}

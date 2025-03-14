@@ -110,13 +110,44 @@ resource "fabric_gateway" "example" {
   ]
 }
 
-# Assign a role to the Fabric Gateway
+# Get the group details
+# https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group
+data "azuread_group" "example_admin" {
+  count = var.fabric_vnet_gw_admin != null ? 1 : 0
+
+  display_name = var.fabric_vnet_gw_admin
+}
+
+# Assign roles to the Fabric Gateway
 # https://registry.terraform.io/providers/microsoft/fabric/latest/docs/resources/gateway_role_assignment
-resource "fabric_gateway_role_assignment" "example" {
+resource "fabric_gateway_role_assignment" "example_admin" {
+  count = var.fabric_vnet_gw_admin != null ? 1 : 0
+
   gateway_id = fabric_gateway.example.id
   principal = {
-    id   = data.azurerm_client_config.example.object_id
-    type = data.azuread_directory_object.example.type
+    id   = data.azuread_group.example_admin[count.index].object_id
+    type = "Group"
   }
   role = "Admin"
+}
+
+# Get the group details
+# https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group
+data "azuread_group" "example_connection_creator" {
+  count = var.fabric_vnet_gw_connection_creator != null ? 1 : 0
+
+  display_name = var.fabric_vnet_gw_connection_creator
+}
+
+# Assign roles to the Fabric Gateway
+# https://registry.terraform.io/providers/microsoft/fabric/latest/docs/resources/gateway_role_assignment
+resource "fabric_gateway_role_assignment" "example_connection_creator" {
+  count = var.fabric_vnet_gw_connection_creator != null ? 1 : 0
+
+  gateway_id = fabric_gateway.example.id
+  principal = {
+    id   = data.azuread_group.example_connection_creator[count.index].object_id
+    type = "Group"
+  }
+  role = "ConnectionCreator"
 }
