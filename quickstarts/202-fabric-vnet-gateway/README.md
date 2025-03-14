@@ -6,9 +6,12 @@
 |------------------------------|---------------------------------------------------|-------------|---------|:--------:|
 | `subscription_id`            | The Azure subscription ID                         | string      |         |   true   |
 | `solution_name`              | Name of the solution                              | string      |         |   true   |
-| `location`                   | Location of the Azure resources                   | string      | WestUS3 |  false   |
+| `location`                   | Location of the Azure resources                   | string      | WestUS2 |  false   |
 | `fabric_capacity_sku`        | Fabric Capacity SKU name                          | string      | F2      |  false   |
 | `fabric_capacity_admin_upns` | Collection of admin UPNs for the Fabric Capacity. | set(string) |         |  false   |
+
+> [!WARNING]
+> Azure VNet region needs to be in one of supported regions to be able to create a Fabric virtual network (VNet) data gateway, see [Regions supported for VNet data gateways](https://learn.microsoft.com/data-integration/vnet/create-data-gateways#regions-supported-for-vnet-data-gateways).
 
 ## Output Values
 
