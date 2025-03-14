@@ -40,3 +40,19 @@ variable "fabric_capacity_admin_upns" {
   nullable    = false
   default     = []
 }
+
+variable "fabric_vnet_gw_admin" {
+  description = "Entra Group name for Fabric VNet Gateway admins."
+  type        = string
+  sensitive   = false
+  nullable    = true
+  default     = null
+}
+
+variable "fabric_vnet_gw_connection_creator" {
+  description = "Entra Group name for Fabric VNet Gateway connection creators."
+  type        = string
+  sensitive   = false
+  nullable    = true
+  default     = null
+}
