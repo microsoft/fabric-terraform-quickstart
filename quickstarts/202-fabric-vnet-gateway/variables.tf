@@ -17,7 +17,7 @@ variable "location" {
   type        = string
   sensitive   = false
   nullable    = false
-  default     = "WestUS3"
+  default     = "WestUS2"
 }
 
 variable "fabric_capacity_sku" {
