@@ -1,7 +1,8 @@
 ## Input Variables
 - Please fill the input variables in terraform.tfstate file.
+
 | Name                                | Description                                                   | Type        | Default | Required |
-|-------------------------------------|---------------------------------------------------------------|-------------|---------|:--------:|
+|-------------------------------------|---------------------------------------------------------------|-------------|---------|----------|
 | `fabric_workspace_name`             | The name of workspace to be created                           | string      |         |   true   |
 | `fabric_sql_database_name`          | The name of SQL database to be created                        | string      |         |   true   |
 | `fabric_capacity_name`              | The existing Fabric Capacity name                             | string      |         |   true   |
