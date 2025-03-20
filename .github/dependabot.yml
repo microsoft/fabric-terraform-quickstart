@@ -13,6 +13,12 @@ updates:
     commit-message:
       prefix: ci
       include: scope
+    labels:
+      - "deps/github-actions"
+      - dependencies
+    groups:
+      all:
+        patterns: ["*"]
 
   - package-ecosystem: devcontainers
     directory: /
@@ -22,6 +28,12 @@ updates:
       prefix: build
       prefix-development: chore
       include: scope
+    labels:
+      - "deps/devcontainer"
+      - dependencies
+    groups:
+      all:
+        patterns: ["*"]
 
   - package-ecosystem: gomod
     directory: /quickstarts/401-testing-terratest
@@ -31,18 +43,25 @@ updates:
       prefix: build
       prefix-development: chore
       include: scope
-
-  - package-ecosystem: terraform
-    directories:
-      - "/quickstarts/101-hello-fabric/*"
-      - "/quickstarts/102-fabric-capacity/*"
-      - "/quickstarts/301-testing-terraform/*"
-    schedule:
-      interval: daily
+    labels:
+      - "deps/go"
+      - dependencies
     groups:
       all:
         patterns: ["*"]
+
+  - package-ecosystem: terraform
+    directories:
+      - "/quickstarts/*"
+    schedule:
+      interval: daily
     commit-message:
       prefix: build
       prefix-development: chore
       include: scope
+    labels:
+      - "deps/terraform"
+      - dependencies
+    groups:
+      all:
+        patterns: ["*"]
