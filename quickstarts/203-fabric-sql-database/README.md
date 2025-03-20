@@ -24,7 +24,7 @@
 - This example requires authentication setup. the authenticating method in this example is "Authenticating using a Service Principal and Client Certificate": https://registry.terraform.io/providers/microsoft/fabric/latest/docs/guides/auth_spn_cert
 
 ## Usage
-- Fill the input variables in terraform.tfstate file.
+- Create a terraform.tfstate file, fill values for all variables in the variables.tf file.
 - Execute example with the following commands:
 
 ```shell
