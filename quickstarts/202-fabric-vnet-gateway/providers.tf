@@ -4,12 +4,12 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.23.0"
+      version = "4.25.0"
     }
     # https://registry.terraform.io/providers/hashicorp/azuread/latest
     azuread = {
       source  = "hashicorp/azuread"
-      version = "3.1.0"
+      version = "3.2.0"
     }
     # https://registry.terraform.io/providers/microsoft/fabric/latest
     fabric = {
@@ -23,10 +23,6 @@ provider "azurerm" {
   features {}
   # Configuration options
   subscription_id = var.subscription_id
-}
-
-provider "azuread" {
-  # Configuration options
 }
 
 provider "fabric" {
