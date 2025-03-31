@@ -1,4 +1,4 @@
-# Fabric Terraform Quickstarts
+# Fabric Terraform Quick-Starts
 
 This repository contains example terraform modules that can be used to quickly deploy Fabric resources. The modules are intended to demonstrate some common scenarios where managing Fabric resources along side Azure, [Entra](https://entra.microsoft.com), or other resources can be facilitated with the [Terraform Provider for Microsoft Fabric](https://aka.ms/FabricTF). The modules are examples and are not intended to be used in production environments without modification.
 
