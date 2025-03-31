@@ -6,7 +6,7 @@
 |-------------------------------------|---------------------------------------------------------------|--------|---------|:--------:|
 | `subscription_id`                   | The Azure subscription ID                                     | string |         |   true   |
 | `solution_name`                     | Name of the solution                                          | string |         |   true   |
-| `fabric_capacity_nam`               | Existing Fabric Capacity name                                 | string |         |   true   |
+| `fabric_capacity_name`               | Existing Fabric Capacity name                                 | string |         |   true   |
 | `location`                          | Location of the Azure resources                               | string | WestUS2 |  false   |
 | `fabric_vnet_gw_admin`              | Entra Group name for Fabric VNet Gateway admins.              | string |         |  false   |
 | `fabric_vnet_gw_connection_creator` | Entra Group name for Fabric VNet Gateway connection creators. | string |         |  false   |
