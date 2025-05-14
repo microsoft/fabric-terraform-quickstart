@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+---
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+version: "0.2"
+language: en
+dictionaries:
+  - en_US
+  - companies
+  - softwareTerms
+  - misc
+  - go
+  - python
+  - powershell
+  - bash
+  - filetypes
+words:
+  - Entra
+  - vnet
+  - tftest
+  - MSRC
+  - upns
+  - azuread
+allowCompoundWords: true

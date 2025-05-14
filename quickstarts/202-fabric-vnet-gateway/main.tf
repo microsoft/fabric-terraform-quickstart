@@ -45,6 +45,20 @@ resource "azurerm_subnet" "example" {
   }
 }
 
+# Create a network security group
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group
+resource "azurerm_network_security_group" "example" {
+  name                = "nsg-default"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+# Assign network security group to the subnet
+resource "azurerm_subnet_network_security_group_association" "example" {
+  subnet_id                 = azurerm_subnet.example.id
+  network_security_group_id = azurerm_network_security_group.example.id
+}
+
 # Get the Fabric Capacity details.
 # https://registry.terraform.io/providers/microsoft/fabric/latest/docs/data-sources/capacity
 data "fabric_capacity" "example" {

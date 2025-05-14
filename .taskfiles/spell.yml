@@ -1,0 +1,42 @@
+#  yaml-language-server: $schema=https://taskfile.dev/schema.json
+# docs: https://taskfile.dev
+---
+version: "3"
+
+includes:
+  internal: internal.yml
+
+tasks:
+  # * Tools
+  tools:
+    desc: Install Spell tools
+    cmds:
+      - for: [cspell]
+        task: internal:install:npm
+        vars:
+          APP: "{{.ITEM}}"
+      - for: [lycheeverse.lychee]
+        task: internal:install:winget
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [windows]
+      - for: [lychee]
+        task: internal:install:brew
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [darwin]
+      - cmd: |
+          arch=$(uname -m)
+          download_url=$(curl --location --silent "https://api.github.com/repos/lycheeverse/lychee/releases/latest" | grep 'browser_download_url.*lychee-'"${arch}"'.*gnu.*tar.gz' | grep -o 'https://[^"]*')
+          curl --location -o /tmp/lychee.tar.gz "${download_url}"
+          tar -xf /tmp/lychee.tar.gz --directory /tmp
+          rm /tmp/lychee.tar.gz
+          sudo mv /tmp/lychee /usr/local/bin/lychee
+        platforms: [linux]
+
+  lint:
+    desc: Lint Spell files
+    cmds:
+      - cspell --config ./.cspell.yml "./**/*.md"
+      - lychee --config ./.lychee.toml --format markdown .
+    dir: "{{.ROOT_DIR}}"

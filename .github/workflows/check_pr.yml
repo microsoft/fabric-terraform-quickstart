@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+# Linter to enforce semantic pull request titles (see https://www.conventionalcommits.org/)
+---
+name: 🔍 Check PR
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ format('{0}-{1}-{2}-{3}-{4}', github.workflow, github.event_name, github.ref, github.base_ref || null, github.head_ref || null) }}
+  cancel-in-progress: true
+
+jobs:
+  main:
+    name: Check PR
+    runs-on: ubuntu-24.04
+    steps:
+      - name: ⤵️ Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: 🚧 Setup Go
+        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        with:
+          go-version: stable
+          check-latest: true
+
+      - name: 🚧 Setup Task
+        uses: arduino/setup-task@b91d5d2c96a56797b48ac1e0e89220bf64044611 # v2.0.0
+        with:
+          repo-token: ${{ github.token }}
+
+      - name: 🔨 Setup tools
+        run: task tools
+
+      - name: 📃 Generate docs
+        run: task docs
+
+      - name: 🔀 Check for differences
+        run: |
+          git diff --compact-summary --exit-code || \
+            (echo; echo "🛑 Unexpected difference. Run 'task docs' command and commit."; git diff --exit-code)
+
+      - name: ✔️ Run linters
+        run: task lint
+
+      - name: 🔀 Check for differences
+        run: |
+          git diff --compact-summary --exit-code || \
+            (echo; echo "🛑 Unexpected difference. Run 'task lint' command and commit."; git diff --exit-code)

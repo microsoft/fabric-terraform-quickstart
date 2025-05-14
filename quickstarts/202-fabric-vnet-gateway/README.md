@@ -1,26 +1,64 @@
+<!-- BEGIN_TF_DOCS -->
 # Fabric Virtual Network Gateway (200 level)
 
-## Input Variables
+---
 
-| Name                                | Description                                                   | Type   | Default | Required |
-|-------------------------------------|---------------------------------------------------------------|--------|---------|:--------:|
-| `subscription_id`                   | The Azure subscription ID                                     | string |         |   true   |
-| `solution_name`                     | Name of the solution                                          | string |         |   true   |
-| `fabric_capacity_name`               | Existing Fabric Capacity name                                 | string |         |   true   |
-| `location`                          | Location of the Azure resources                               | string | WestUS2 |  false   |
-| `fabric_vnet_gw_admin`              | Entra Group name for Fabric VNet Gateway admins.              | string |         |  false   |
-| `fabric_vnet_gw_connection_creator` | Entra Group name for Fabric VNet Gateway connection creators. | string |         |  false   |
+## Requirements
 
-> [!WARNING]
-> Azure VNet region needs to be in one of supported regions to be able to create a Fabric virtual network (VNet) data gateway, see [Regions supported for VNet data gateways](https://learn.microsoft.com/data-integration/vnet/create-data-gateways#regions-supported-for-vnet-data-gateways).
+| Name      | Version       |
+|-----------|---------------|
+| terraform | >= 1.8, < 2.0 |
+| azuread   | 3.3.0         |
+| azurerm   | 4.28.0        |
+| fabric    | 1.1.0         |
 
-## Output Values
+## Providers
 
-| Name               | Description                           |
-|--------------------|---------------------------------------|
-| `fabric_capacity`  | Fabric Capacity object                |
-| `fabric_workspace` | Fabric Workspace object               |
-| `fabric_gateway`   | Fabric Virtual Network Gateway object |
+| Name    | Version |
+|---------|---------|
+| azuread | 3.3.0   |
+| azurerm | 4.28.0  |
+| fabric  | 1.1.0   |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name                                                                                                                                                                                   | Type        |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [azurerm_network_security_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/resources/network_security_group)                                       | resource    |
+| [azurerm_resource_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/resources/resource_group)                                                       | resource    |
+| [azurerm_role_assignment.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/resources/role_assignment)                                                     | resource    |
+| [azurerm_subnet.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/resources/subnet)                                                                       | resource    |
+| [azurerm_subnet_network_security_group_association.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/resources/subnet_network_security_group_association) | resource    |
+| [azurerm_virtual_network.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/resources/virtual_network)                                                     | resource    |
+| [fabric_gateway.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/gateway)                                                                        | resource    |
+| [fabric_gateway_role_assignment.example_admin](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/gateway_role_assignment)                                  | resource    |
+| [fabric_gateway_role_assignment.example_connection_creator](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/gateway_role_assignment)                     | resource    |
+| [azuread_group.example_admin](https://registry.terraform.io/providers/hashicorp/azuread/3.3.0/docs/data-sources/group)                                                                 | data source |
+| [azuread_group.example_connection_creator](https://registry.terraform.io/providers/hashicorp/azuread/3.3.0/docs/data-sources/group)                                                    | data source |
+| [azurerm_client_config.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.28.0/docs/data-sources/client_config)                                                      | data source |
+| [fabric_capacity.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/data-sources/capacity)                                                                   | data source |
+
+## Inputs
+
+| Name                                  | Description                                                  | Type     | Default     | Required |
+|---------------------------------------|--------------------------------------------------------------|----------|-------------|:--------:|
+| fabric\_capacity\_name                | Existing Fabric Capacity name                                | `string` | n/a         |   yes    |
+| solution\_name                        | Name of the solution                                         | `string` | n/a         |   yes    |
+| subscription\_id                      | The Azure subscription ID                                    | `string` | n/a         |   yes    |
+| fabric\_vnet\_gw\_admin               | Entra Group name for Fabric VNet Gateway admins              | `string` | `null`      |    no    |
+| fabric\_vnet\_gw\_connection\_creator | Entra Group name for Fabric VNet Gateway connection creators | `string` | `null`      |    no    |
+| location                              | Location of the Azure resources                              | `string` | `"WestUS2"` |    no    |
+
+## Outputs
+
+| Name             | Description                    |
+|------------------|--------------------------------|
+| fabric\_capacity | Details of the Fabric Capacity |
+| fabric\_gateway  | Details of the Fabric Gateway  |
 
 ## Usage
 
@@ -31,17 +69,7 @@ terraform init
 terraform apply
 ```
 
-## Expected Behavior
-
-The Terraform creates following resources:
-
-- Azure Resource Group
-- Azure Virtual Network with Subnet
-- Azure Role Assignment for Virtual Network
-- Fabric Workspace
-- Fabric Virtual Network Gateway
-- Fabric Gateway Role Assignment
-
 ## Limitations and Considerations
 
 - This example is provided as a sample only and is not intended for production use without further customization.
+<!-- END_TF_DOCS -->

@@ -1,0 +1,139 @@
+#  yaml-language-server: $schema=https://taskfile.dev/schema.json
+# docs: https://taskfile.dev
+---
+version: "3"
+
+includes:
+  internal: internal.yml
+
+tasks:
+  # * Tools
+  tools:
+    desc: Install Terraform tools
+    cmds:
+      - for:
+          [
+            HashiCorp.Terraform,
+            Terraform-docs.Terraform-docs,
+            AquaSecurity.Trivy,
+            OpenTofu.Tofu,
+            TerraformLinters.tflint,
+          ]
+        task: internal:install:winget
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [windows]
+      - cmd: |
+          wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update && sudo apt install terraform
+        platforms: [linux]
+      - cmd: |
+          arch=$(uname -m)
+          if [[ "${arch}" == "x86_64" ]]; then
+            arch="amd64"
+          elif [[ "${arch}" == "aarch64" ]]; then
+            arch="arm64"
+          else
+            echo "Unsupported architecture: ${arch}"
+            exit 1
+          fi
+          download_url=$(curl --location --silent "https://api.github.com/repos/terraform-docs/terraform-docs/releases/latest" | grep 'browser_download_url.*terraform-docs.*linux-'"${arch}"'.*tar.gz"' | grep -o 'https://[^"]*')
+          curl --location -o /tmp/terraform-docs.tar.gz "${download_url}"
+          tar -xf /tmp/terraform-docs.tar.gz --directory /tmp
+          rm /tmp/terraform-docs.tar.gz
+          chmod +x /tmp/terraform-docs
+          sudo mv /tmp/terraform-docs /usr/local/bin/terraform-docs
+        platforms: [linux]
+      - cmd: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+        platforms: [linux]
+      - for: [hashicorp/tap]
+        task: internal:install:brew:tap
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [darwin]
+      - for: [hashicorp/tap/terraform, terraform-docs, trivy, opentofu, tflint]
+        task: internal:install:brew
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [darwin]
+      - cmd: |
+          sudo apt-get install wget gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+        platforms: [linux]
+      - cmd: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
+          chmod +x install-opentofu.sh
+          ./install-opentofu.sh --install-method deb
+          rm -f install-opentofu.sh
+        platforms: [linux]
+
+  # * Lint
+  lint:
+    desc: Run Terraform linters
+    cmds:
+      - terraform fmt -recursive
+      - tflint --recursive --fix
+      - trivy config --ignorefile ./.trivyignore.yml --render-cause terraform --misconfig-scanners terraform,terraformplan-json,terraformplan-snapshot .
+    dir: "{{.ROOT_DIR}}"
+
+  # * Docs
+  docs:
+    desc: Generate Terraform documentation
+    vars:
+      ITEMS:
+        sh: |
+          {{if eq OS "windows"}}
+            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
+          {{else}}
+            find . -mindepth 2 -not -path "*/.terraform/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
+          {{end}}
+    cmds:
+      - for: { var: ITEMS }
+        cmd: terraform-docs -c ./.terraform-docs.yml "{{clean .ITEM}}"
+      # - for: { var: ITEMS }
+      #   cmd: |
+      #     {{.PWSH}} '(Get-Content ./quickstarts/{{.ITEM}}/README.md) -replace "__NAME__", "{{.ITEM}}" | Set-Content ./quickstarts/{{.ITEM}}/README.md'
+      #   platforms: [windows]
+      # - for: { var: ITEMS }
+      #   cmd: sed -i 's/__NAME__/{{.ITEM}}/g' ./quickstarts/{{.ITEM}}/README.md
+      #   platforms: [linux, darwin]
+    dir: "{{.ROOT_DIR}}"
+
+  # * Clean
+  clean:
+    desc: Clean up Terraform files
+    cmds:
+      - cmd: |
+          find ./ -name ".terraform" -type d -exec rm -rf {} \;
+          find ./ -name "*.terraform.lock.*" -type f -exec rm -f {} \;
+          find ./ -name "*.tfstate*" -type f -exec rm -f {} \;
+        platforms: [linux, darwin]
+      - cmd: |
+          {{.PWSH}} "Get-ChildItem -Path ./ -Include '.terraform' -Directory -Recurse | Remove-Item -Recurse -Force"
+          {{.PWSH}} "Get-ChildItem -Path ./ -Include '*.terraform.lock.*' -File -Recurse | Remove-Item -Force"
+          {{.PWSH}} "Get-ChildItem -Path ./ -Include '*.tfstate*' -File -Recurse | Remove-Item -Force"
+        platforms: [windows]
+    dir: "{{.ROOT_DIR}}"
+
+  init:
+    desc: Run terraform init on all quickstarts
+    vars:
+      ITEMS:
+        sh: |
+          {{if eq OS "windows"}}
+            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
+          {{else}}
+            find . -mindepth 2 -not -path "*/.terraform/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
+          {{end}}
+    cmds:
+      - for: { var: ITEMS }
+        cmd: |
+          pushd {{.ITEM}}
+          terraform init -upgrade -backend=false
+          popd
+    dir: "{{.ROOT_DIR}}"
