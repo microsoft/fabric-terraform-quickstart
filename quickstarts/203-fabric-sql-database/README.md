@@ -8,11 +8,6 @@
 | `fabric_workspace_name`             | The name of workspace to be created                           | string      |         |   true   |
 | `fabric_sql_database_name`          | The name of SQL database to be created                        | string      |         |   true   |
 | `fabric_capacity_name`              | The existing Fabric Capacity name                             | string      |         |   true   |
-| `tenant_id`                         | The tenant id                                                 | string      |         |   true   |
-| `client_id`                         | The Application (client) ID.                                  | string      |         |   true   |
-| `client_certificate_file_path`      | The local path of the certificate which needs to pfx format   | string      |         |   true   |
-| `client_certificate_password`       | The password of the certificate                               | string      |         |   true   |
-| `user_principal_id`                 | principal_id is the user account object id                    | string      |         |   true   |
 
 ## Output Values
 
@@ -23,7 +18,7 @@
 
 ## Prerequisites
 - This example requires an existing Fabric capacity.
-- This example requires authentication setup. the authenticating method in this example is "Authenticating using a Service Principal and Client Certificate": https://registry.terraform.io/providers/microsoft/fabric/latest/docs/guides/auth_spn_cert
+- This example requires authentication setup. The authenticating method is not included in this example. For Service Principal, please refer to : https://registry.terraform.io/providers/microsoft/fabric/latest/docs/guides/auth_spn_cert. For user context authentication, please run 'az login' in the command window.
 
 ## Usage
 - Create a terraform.tfstate file, fill values for all variables in the variables.tf file.
@@ -37,9 +32,9 @@ terraform apply
 
 ## Expected Behavior
 
-The Terraform creates following resources with Service Principal:
+The Terraform creates following resources:
 
-- Fabric Workspace. The user is also added as "Admin" role in the workspace.
+- Fabric Workspace.
 - Fabric SQL database
 
 ## Limitations and Considerations
