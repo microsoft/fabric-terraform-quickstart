@@ -1,17 +1,43 @@
+<!-- BEGIN_TF_DOCS -->
 # Hello Fabric (100 level)
 
-## Input Variables
+---
 
-| Name                    | Description                  | Type   | Default | Required |
-|-------------------------|------------------------------|--------|---------|:--------:|
-| `workspace_name`        | Name of the Workspace        | string |         |   true   |
+## Requirements
 
-## Output Values
+| Name      | Version       |
+|-----------|---------------|
+| terraform | >= 1.8, < 2.0 |
+| fabric    | 1.1.0         |
 
-| Name           | Description      |
-|----------------|------------------|
-| `workspace`    | Workspace object |
-| `workspace_id` | Workspace ID     |
+## Providers
+
+| Name   | Version |
+|--------|---------|
+| fabric | 1.1.0   |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name                                                                                                                | Type     |
+|---------------------------------------------------------------------------------------------------------------------|----------|
+| [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/workspace) | resource |
+
+## Inputs
+
+| Name            | Description           | Type     | Default | Required |
+|-----------------|-----------------------|----------|---------|:--------:|
+| workspace\_name | Name of the Workspace | `string` | n/a     |   yes    |
+
+## Outputs
+
+| Name          | Description |
+|---------------|-------------|
+| workspace     | n/a         |
+| workspace\_id | n/a         |
 
 ## Usage
 
@@ -22,12 +48,7 @@ terraform init
 terraform apply
 ```
 
-## Expected Behavior
-
-The Fabric provider creates following resources:
-
-- Workspace
-
 ## Limitations and Considerations
 
 - This example is provided as a sample only and is not intended for production use without further customization.
+<!-- END_TF_DOCS -->

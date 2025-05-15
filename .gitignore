@@ -39,3 +39,6 @@ terraform.rc
 # Ignore lock files
 *.lock.hcl
 *.lock.info
+
+# Ignore cache files
+.lycheecache

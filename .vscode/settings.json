@@ -2,6 +2,10 @@
   // files
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
+  "files.associations": {
+    "**/.github/workflows/*.y*ml": "yaml",
+    "CODEOWNERS": "ignore"
+  },
   // editor
   "editor.inlineSuggest.enabled": true,
   "editor.detectIndentation": true,
@@ -33,7 +37,7 @@
     "editor.formatOnPaste": true
   },
   "markdownlint.config": {
-    "extends": "./.github/linters/.markdownlint.yml"
+    "extends": "./.markdownlint.yml"
   },
   // go
   "go.useLanguageServer": true,
@@ -63,17 +67,17 @@
   "linter.linters": {
     "yamllint": {
       "configFiles": [
-        ".github/linters/.yamllint.yml"
+        ".yamllint.yml"
       ]
     },
     "markdownlint": {
       "configFiles": [
-        ".github/linters/.markdownlint.yml"
+        ".markdownlint.yml"
       ]
     },
     "shellcheck": {
       "configFiles": [
-        ".github/linters/.shellcheckrc"
+        ".shellcheckrc"
       ],
       "command": [
         "shellcheck",
@@ -89,8 +93,24 @@
   },
   "shellcheck.customArgs": [
     "--rcfile",
-    ".github/linters/.shellcheckrc"
+    ".shellcheckrc"
   ],
   "shellcheck.useWorkspaceRootAsCwd": true,
-  "sarif-viewer.connectToGithubCodeScanning": "on"
+  "sarif-viewer.connectToGithubCodeScanning": "on",
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "[terraform-test]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "[hcl]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  // copilot
+  "chat.mcp.discovery.enabled": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Use the Conventional Commits specification to create commit message with scope to keep consistent commit history. Do not use file extension. Must be less than 100 characters."
+    }
+  ]
 }

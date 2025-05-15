@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://json.schemastore.org/golangci-lint.json
+# Visit https://golangci-lint.run/ for usage documentation and information on other useful linters
+---
+version: "2"
+run:
+  allow-parallel-runners: true
+  allow-serial-runners: true
+output:
+  sort-order:
+    - linter
+    - severity
+    - file
+linters:
+  default: all
+  disable:
+    - cyclop
+    - depguard
+    - err113
+    - exhaustruct
+    - funlen
+    - goheader
+    - gomoddirectives
+    - ireturn
+    - lll
+    - mnd
+    - paralleltest
+    - wrapcheck
+  settings:
+    exhaustive:
+      default-signifies-exhaustive: true
+    godot:
+      capital: true
+    nestif:
+      min-complexity: 10
+    revive:
+      enable-all-rules: true
+      rules:
+        - name: line-length-limit
+          disabled: true
+        - name: cognitive-complexity
+          disabled: true
+        - name: add-constant
+          disabled: true
+        - name: bare-return
+          disabled: true
+        - name: function-length
+          disabled: true
+        - name: unused-receiver
+          disabled: true
+        - name: cyclomatic
+          disabled: true
+        - name: if-return
+          disabled: true
+        - name: max-public-structs
+          disabled: true
+        - name: confusing-naming
+          disabled: true
+    varnamelen:
+      min-name-length: 1
+    wsl:
+      allow-trailing-comment: true
+      allow-cuddle-declarations: true
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - path: (.+)_test\.go
+        text: unchecked-type-assertion
+      - linters:
+          - dupl
+          - forcetypeassert
+          - gochecknoglobals
+          - gocognit
+          - goconst
+          - nonamedreturns
+        path: (.+)_test\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  fix: true
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - localmodule
+    golines:
+      max-len: 200
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
