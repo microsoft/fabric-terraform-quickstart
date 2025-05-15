@@ -6,10 +6,10 @@ Checkout how to write automated unit tests against [301-testing-terraform](./../
 
 ## Output Values
 
-| Name                             | Description                  |
-|----------------------------------|------------------------------|
-| `workspace_id`                   | Workspace ID                 |
-| `workspace_role_assignment_id`   | Workspace role assignment ID |
+| Name                           | Description                  |
+|--------------------------------|------------------------------|
+| `workspace_id`                 | Workspace ID                 |
+| `workspace_role_assignment_id` | Workspace role assignment ID |
 
 ## Testing
 

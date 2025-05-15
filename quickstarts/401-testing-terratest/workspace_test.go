@@ -4,7 +4,6 @@
 package terratests_test
 
 import (
-	"context"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
@@ -24,7 +23,7 @@ func TestTerraform_Workspace(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "./../301-testing-terraform",
-		Vars: map[string]interface{}{
+		Vars: map[string]any{
 			"workspace_name":        expectedWorkspaceName,
 			"principal_id":          expectedRoleAssignmentPrincipalID,
 			"workspace_description": expectedWorkspaceDescription,
@@ -51,8 +50,8 @@ func TestTerraform_Workspace(t *testing.T) {
 
 	workspaceClient := client.NewWorkspacesClient()
 
-	actualWorkspace, _ := workspaceClient.GetWorkspace(context.Background(), expectedWorkspaceID, nil)
-	actualWorkspaceRoleAssignment, _ := workspaceClient.GetWorkspaceRoleAssignment(context.Background(), expectedWorkspaceID, expectedWorkspaceRoleAssignmentID, nil)
+	actualWorkspace, _ := workspaceClient.GetWorkspace(t.Context(), expectedWorkspaceID, nil)
+	actualWorkspaceRoleAssignment, _ := workspaceClient.GetWorkspaceRoleAssignment(t.Context(), expectedWorkspaceID, expectedWorkspaceRoleAssignmentID, nil)
 
 	// Assert workspace values
 	assert.Equal(t, expectedWorkspaceName, *actualWorkspace.DisplayName, "workspace display_name was not assigned correctly")

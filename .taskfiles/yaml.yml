@@ -1,0 +1,24 @@
+#  yaml-language-server: $schema=https://taskfile.dev/schema.json
+# docs: https://taskfile.dev
+---
+version: "3"
+
+includes:
+  internal: internal.yml
+
+tasks:
+  # * Tools
+  tools:
+    desc: Install YAML tools
+    cmds:
+      - for: [yamllint]
+        task: internal:install:pipx
+        vars:
+          APP: "{{.ITEM}}"
+
+  # * Lint
+  lint:
+    desc: Lint YAML files
+    cmds:
+      - yamllint -c ./.yamllint.yml .
+    dir: "{{.ROOT_DIR}}"

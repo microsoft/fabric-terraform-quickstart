@@ -1,0 +1,73 @@
+#  yaml-language-server: $schema=https://taskfile.dev/schema.json
+# docs: https://taskfile.dev
+---
+version: "3"
+
+includes:
+  internal: internal.yml
+
+tasks:
+  # * Tools
+  tools:
+    desc: Install GoLang tools
+    cmds:
+      - for: [GolangCI.golangci-lint]
+        task: internal:install:winget
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [windows]
+      - for: [golangci-lint]
+        task: internal:install:brew
+        vars:
+          APP: "{{.ITEM}}"
+        platforms: [darwin]
+      - cmd: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" latest
+        platforms: [linux]
+      - for: [golang.org/x/vuln/cmd/govulncheck@latest]
+        task: internal:install:go
+        vars:
+          APP: "{{.ITEM}}"
+
+  # * Lint
+  lint:
+    desc: Run GoLang linters
+    vars:
+      WORKDIRS:
+        sh: |
+          {{if eq OS "windows"}}
+            {{.PWSH}} '(Get-ChildItem . go.mod -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(vendor|.terraform)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
+          {{else}}
+            find . -mindepth 2 -not -path "*/vendor/*" -not -path "*/.terraform/*" -type f -name go.mod -exec dirname {} \;
+          {{end}}
+    cmds:
+      - for: { var: WORKDIRS }
+        task: run:golangci
+        vars:
+          WORKDIR: "{{.ITEM}}"
+      - for: { var: WORKDIRS }
+        task: run:govulncheck
+        vars:
+          WORKDIR: "{{.ITEM}}"
+    dir: "{{.ROOT_DIR}}"
+
+  run:golangci:
+    desc: Run golangci-lint
+    internal: true
+    preconditions:
+      - sh: |
+          {{empty .WORKDIR | not}}
+        msg: No WORKDIR provided. Please provide a WORKDIR to check.
+    cmds:
+      - golangci-lint run --fix
+    dir: "{{.WORKDIR}}"
+
+  run:govulncheck:
+    desc: govulncheck
+    internal: true
+    preconditions:
+      - sh: |
+          {{empty .WORKDIR | not}}
+        msg: No WORKDIR provided. Please provide a WORKDIR to check.
+    cmds:
+      - govulncheck -test -show verbose ./...
+    dir: "{{.WORKDIR}}"
