@@ -10,5 +10,5 @@ variable "fabric_sql_database_name" {
 
 variable "fabric_capacity_name" {
   description = "The existing Fabric Capacity name."
-  type = string
+  type        = string
 }

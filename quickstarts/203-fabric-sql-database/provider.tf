@@ -12,5 +12,5 @@ terraform {
 # Configure the Microsoft Fabric Terraform Provider
 provider "fabric" {
   # Configuration options
-  preview = true                     # Farbic SQL database is in preview state.
+  preview = true # Farbic SQL database is in preview state.
 }
