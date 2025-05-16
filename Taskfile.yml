@@ -58,11 +58,11 @@ tasks:
     cmds:
       - task: gh:lint
       - task: go:lint
-      - task: md:lint
       - task: sec:lint
-      - task: spell:lint
       - task: tf:lint
       - task: yml:lint
+      - task: md:lint
+      - task: spell:lint
 
   docs:
     desc: Generate documentation

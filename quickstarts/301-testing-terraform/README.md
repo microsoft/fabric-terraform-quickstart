@@ -44,10 +44,10 @@ No modules.
 
 ## Outputs
 
-| Name                            | Description |
-|---------------------------------|-------------|
-| workspace\_id                   | n/a         |
-| workspace\_role\_assignment\_id | n/a         |
+| Name                            | Description                             |
+|---------------------------------|-----------------------------------------|
+| workspace\_id                   | The Fabric workspace ID                 |
+| workspace\_role\_assignment\_id | The Fabric workspace role assignment ID |
 
 ## Usage
 

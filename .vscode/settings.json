@@ -104,7 +104,7 @@
     "editor.defaultFormatter": "hashicorp.terraform"
   },
   "[hcl]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
+    "editor.defaultFormatter": "hashicorp.hcl"
   },
   // copilot
   "chat.mcp.discovery.enabled": true,

@@ -48,10 +48,10 @@ No modules.
 
 ## Outputs
 
-| Name              | Description                     |
-|-------------------|---------------------------------|
-| fabric\_capacity  | Details of the Fabric Capacity  |
-| fabric\_workspace | Details of the Fabric Workspace |
+| Name              | Description                 |
+|-------------------|-----------------------------|
+| fabric\_capacity  | The Fabric Capacity object  |
+| fabric\_workspace | The Fabric Workspace object |
 
 ## Usage
 
