@@ -34,10 +34,10 @@ No modules.
 
 ## Outputs
 
-| Name          | Description |
-|---------------|-------------|
-| workspace     | n/a         |
-| workspace\_id | n/a         |
+| Name          | Description                 |
+|---------------|-----------------------------|
+| workspace     | The Fabric workspace object |
+| workspace\_id | The Fabric workspace ID     |
 
 ## Usage
 

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "hashicorp.terraform",
+    "hashicorp.hcl",
+    "redhat.vscode-yaml",
+    "golang.go",
+    "DavidAnson.vscode-markdownlint",
+    "task.vscode-task"
+  ]
+}

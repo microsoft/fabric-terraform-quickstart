@@ -33,10 +33,15 @@ tasks:
           rm /tmp/lychee.tar.gz
           sudo mv /tmp/lychee /usr/local/bin/lychee
         platforms: [linux]
+      - for: [codespell]
+        task: internal:install:pipx
+        vars:
+          APP: "{{.ITEM}}"
 
   lint:
     desc: Lint Spell files
     cmds:
+      - codespell --summary --write-changes
       - cspell --config ./.cspell.yml "./**/*.md"
       - lychee --config ./.lychee.toml --format markdown .
     dir: "{{.ROOT_DIR}}"

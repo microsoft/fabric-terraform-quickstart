@@ -15,7 +15,6 @@ tasks:
           [
             HashiCorp.Terraform,
             Terraform-docs.Terraform-docs,
-            AquaSecurity.Trivy,
             OpenTofu.Tofu,
             TerraformLinters.tflint,
           ]
@@ -53,32 +52,40 @@ tasks:
         vars:
           APP: "{{.ITEM}}"
         platforms: [darwin]
-      - for: [hashicorp/tap/terraform, terraform-docs, trivy, opentofu, tflint]
+      - for: [hashicorp/tap/terraform, terraform-docs, opentofu, tflint]
         task: internal:install:brew
         vars:
           APP: "{{.ITEM}}"
         platforms: [darwin]
-      - cmd: |
-          sudo apt-get install wget gnupg
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install trivy
-        platforms: [linux]
       - cmd: |
           curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
           chmod +x install-opentofu.sh
           ./install-opentofu.sh --install-method deb
           rm -f install-opentofu.sh
         platforms: [linux]
+      - cmd: |
+          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
+          tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
+          install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
+        platforms: [linux]
+      - cmd: |
+          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Darwin_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
+          tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
+          install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
+        platforms: [darwin]
+      - cmd: |
+          {{.PWSH}} 'Invoke-WebRequest -Uri ((Invoke-RestMethod https://api.github.com/repos/tenable/terrascan/releases/latest).assets | Where-Object { $_.browser_download_url -match "Windows_x86_64\.tar\.gz$" } | Select-Object -ExpandProperty browser_download_url) -OutFile "$env:TMP\terrascan.tar.gz"'
+          {{.PWSH}} 'tar -xzf "$env:TMP\terrascan.tar.gz" -C "$env:TMP" terrascan.exe'
+          {{.PWSH}} 'Remove-Item "$env:TMP\terrascan.tar.gz" -Force'
+        platforms: [windows]
 
   # * Lint
   lint:
     desc: Run Terraform linters
     cmds:
       - terraform fmt -recursive
-      - tflint --recursive --fix
-      - trivy config --ignorefile ./.trivyignore.yml --render-cause terraform --misconfig-scanners terraform,terraformplan-json,terraformplan-snapshot .
+      - tflint --init --config "$(pwd)/.tflint.hcl"
+      - tflint --recursive --fix --config "$(pwd)/.tflint.hcl"
     dir: "{{.ROOT_DIR}}"
 
   # * Docs
@@ -88,19 +95,21 @@ tasks:
       ITEMS:
         sh: |
           {{if eq OS "windows"}}
-            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
+            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform|.external_modules)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
           {{else}}
-            find . -mindepth 2 -not -path "*/.terraform/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
+            find . -mindepth 2 -not -path "*/.terraform/*" -not -path "*/.external_modules/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
           {{end}}
     cmds:
       - for: { var: ITEMS }
         cmd: terraform-docs -c ./.terraform-docs.yml "{{clean .ITEM}}"
       # - for: { var: ITEMS }
       #   cmd: |
-      #     {{.PWSH}} '(Get-Content ./quickstarts/{{.ITEM}}/README.md) -replace "__NAME__", "{{.ITEM}}" | Set-Content ./quickstarts/{{.ITEM}}/README.md'
+      #     {{.PWSH}} '$name = Split-Path "{{clean .ITEM}}" -Leaf; (Get-Content "./{{clean .ITEM}}/README.md") -replace "__NAME__", $name | Set-Content "./{{clean .ITEM}}/README.md"'
       #   platforms: [windows]
       # - for: { var: ITEMS }
-      #   cmd: sed -i 's/__NAME__/{{.ITEM}}/g' ./quickstarts/{{.ITEM}}/README.md
+      #   cmd: |
+      #     sed -i "s/__NAME__/$(basename "{{clean .ITEM}}")/g" "./{{clean .ITEM}}/README.md"
+      #     sed -i -e '$a\' "./{{clean .ITEM}}/README.md"
       #   platforms: [linux, darwin]
     dir: "{{.ROOT_DIR}}"
 
@@ -109,26 +118,28 @@ tasks:
     desc: Clean up Terraform files
     cmds:
       - cmd: |
+          find ./ -name ".external_modules" -type d -exec rm -rf {} \;
           find ./ -name ".terraform" -type d -exec rm -rf {} \;
           find ./ -name "*.terraform.lock.*" -type f -exec rm -f {} \;
           find ./ -name "*.tfstate*" -type f -exec rm -f {} \;
         platforms: [linux, darwin]
       - cmd: |
-          {{.PWSH}} "Get-ChildItem -Path ./ -Include '.terraform' -Directory -Recurse | Remove-Item -Recurse -Force"
-          {{.PWSH}} "Get-ChildItem -Path ./ -Include '*.terraform.lock.*' -File -Recurse | Remove-Item -Force"
-          {{.PWSH}} "Get-ChildItem -Path ./ -Include '*.tfstate*' -File -Recurse | Remove-Item -Force"
+          {{.PWSH}} 'Get-ChildItem -Path ./ -Include ".external_modules" -Directory -Recurse | Remove-Item -Recurse -Force -Confirm:$false'
+          {{.PWSH}} 'Get-ChildItem -Path ./ -Include ".terraform" -Directory -Recurse | Remove-Item -Recurse -Force -Confirm:$false'
+          {{.PWSH}} 'Get-ChildItem -Path ./ -Include "*.terraform.lock.*" -File -Recurse | Remove-Item -Force -Confirm:$false'
+          {{.PWSH}} 'Get-ChildItem -Path ./ -Include "*.tfstate*" -File -Recurse | Remove-Item -Force -Confirm:$false'
         platforms: [windows]
     dir: "{{.ROOT_DIR}}"
 
   init:
-    desc: Run terraform init on all quickstarts
+    desc: Run terraform init on all modules
     vars:
       ITEMS:
         sh: |
           {{if eq OS "windows"}}
-            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
+            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform|.external_modules)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
           {{else}}
-            find . -mindepth 2 -not -path "*/.terraform/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
+            find . -mindepth 2 -not -path "*/.terraform/*" -not -path "*/.external_modules/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
           {{end}}
     cmds:
       - for: { var: ITEMS }
