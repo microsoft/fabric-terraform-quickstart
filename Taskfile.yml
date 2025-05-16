@@ -68,5 +68,5 @@ tasks:
     desc: Generate documentation
     cmds:
       - task: tf:docs
-      - task: md:lint
       - task: spell:lint
+      - task: md:lint
