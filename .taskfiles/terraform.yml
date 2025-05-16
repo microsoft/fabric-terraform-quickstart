@@ -15,7 +15,6 @@ tasks:
           [
             HashiCorp.Terraform,
             Terraform-docs.Terraform-docs,
-            AquaSecurity.Trivy,
             OpenTofu.Tofu,
             TerraformLinters.tflint,
           ]
@@ -53,18 +52,11 @@ tasks:
         vars:
           APP: "{{.ITEM}}"
         platforms: [darwin]
-      - for: [hashicorp/tap/terraform, terraform-docs, trivy, opentofu, tflint]
+      - for: [hashicorp/tap/terraform, terraform-docs, opentofu, tflint]
         task: internal:install:brew
         vars:
           APP: "{{.ITEM}}"
         platforms: [darwin]
-      - cmd: |
-          sudo apt-get install wget gnupg
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install trivy
-        platforms: [linux]
       - cmd: |
           curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
           chmod +x install-opentofu.sh
@@ -94,7 +86,6 @@ tasks:
       - terraform fmt -recursive
       - tflint --init --config "$(pwd)/.tflint.hcl"
       - tflint --recursive --fix --config "$(pwd)/.tflint.hcl"
-      - trivy config --ignorefile ./.trivyignore.yml --render-cause terraform --misconfig-scanners terraform,terraformplan-json,terraformplan-snapshot .
     dir: "{{.ROOT_DIR}}"
 
   # * Docs
