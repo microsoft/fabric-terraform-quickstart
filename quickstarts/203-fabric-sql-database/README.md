@@ -1,25 +1,49 @@
 <!-- BEGIN_TF_DOCS -->
 # Fabric SQL Database (200 level)
 
-## Input Variables
-- Please fill the input variables in terraform.tfstate file.
+---
 
-| Name                                | Description                                                   | Type        | Default | Required |
-|-------------------------------------|---------------------------------------------------------------|-------------|---------|----------|
-| `fabric_workspace_name`             | The name of workspace to be created                           | string      |         |   true   |
-| `fabric_sql_database_name`          | The name of SQL database to be created                        | string      |         |   true   |
-| `fabric_capacity_name`              | The existing Fabric Capacity name                             | string      |         |   true   |
+## Requirements
 
-## Output Values
+| Name      | Version       |
+|-----------|---------------|
+| terraform | >= 1.8, < 2.0 |
+| azuread   | 3.3.0         |
+| azurerm   | 4.28.0        |
+| fabric    | 1.1.0         |
 
-| Name                     | Description                           |
-|--------------------------|---------------------------------------|
-| `fabric_workspace_id`    | The created Fabric workspace id       |
-| `fabric_sql_database_id` | The created Fabric SQL database  id   |
+## Providers
 
-## Prerequisites
-- This example requires an existing Fabric capacity.
-- This example requires authentication setup. The authenticating method is not included in this example. For Service Principal, please refer to : https://registry.terraform.io/providers/microsoft/fabric/latest/docs/guides/auth_spn_cert. For user context authentication, please run 'az login' in the command window.
+| Name    | Version |
+|---------|---------|
+| azuread | 3.3.0   |
+| azurerm | 4.28.0  |
+| fabric  | 1.1.0   |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name                                                                                                                                                                                   | Type        |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [fabric_capacity.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/data-sources/capacity)                                                                   | data source |
+
+## Inputs
+
+| Name                                  | Description                                                  | Type     | Default     | Required |
+|---------------------------------------|--------------------------------------------------------------|----------|-------------|:--------:|
+| fabric\_capacity\_name                | Existing Fabric Capacity name                                | `string` | n/a         |   yes    |
+| fabric\_workspace\_name               | The name of workspace to be created                          | `string` | n/a         |   yes    |
+| fabric\_sql\_database\_name            | The Azure subscription ID                                    | `string` | n/a         |   yes    |
+
+## Outputs
+
+| Name                       | Description                          |
+|----------------------------|--------------------------------------|
+| fabric\_workspace\_id      | The created Fabric workspace id      |
+| fabric\_sql\_database\_id  | The created Fabric SQL database  id  |
 
 ## Usage
 
@@ -29,13 +53,6 @@ Execute example with the following commands:
 terraform init
 terraform apply
 ```
-
-## Expected Behavior
-
-The Terraform creates following resources:
-
-- Fabric Workspace.
-- Fabric SQL database
 
 ## Limitations and Considerations
 
