@@ -11,16 +11,23 @@ tasks:
   tools:
     desc: Install Security tools
     cmds:
-      - for: [Gitleaks.Gitleaks]
+      - for: [Gitleaks.Gitleaks, AquaSecurity.Trivy]
         task: internal:install:winget
         vars:
           APP: "{{.ITEM}}"
         platforms: [windows]
-      - for: [gitleaks]
+      - for: [gitleaks, trivy]
         task: internal:install:brew
         vars:
           APP: "{{.ITEM}}"
         platforms: [darwin]
+      - cmd: |
+          sudo apt-get install wget gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+        platforms: [linux]
       - cmd: |
           arch=$(uname -m)
           if [[ "${arch}" == "x86_64" ]]; then
@@ -46,6 +53,7 @@ tasks:
   lint:
     desc: Run Security linters
     cmds:
-      - gitleaks detect --source . --redact=90 --verbose
-      # - checkov --quiet --download-external-modules true --directory . #TODO
+      - gitleaks detect --config ./.gitleaks.toml --source . --redact=90 --verbose
+      - trivy --config ./.trivy.yml fs .
+      - checkov --config-file ./.checkov.yml --directory .
     dir: "{{.ROOT_DIR}}"

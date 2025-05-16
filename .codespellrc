@@ -1,0 +1,4 @@
+[codespell]
+skip = ./megalinter-reports,*.svg,*.sum
+ignore-words-list = CAF
+count = true

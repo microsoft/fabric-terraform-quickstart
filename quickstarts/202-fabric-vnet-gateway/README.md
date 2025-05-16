@@ -55,10 +55,10 @@ No modules.
 
 ## Outputs
 
-| Name             | Description                    |
-|------------------|--------------------------------|
-| fabric\_capacity | Details of the Fabric Capacity |
-| fabric\_gateway  | Details of the Fabric Gateway  |
+| Name             | Description                |
+|------------------|----------------------------|
+| fabric\_capacity | The Fabric Capacity object |
+| fabric\_gateway  | The Fabric Gateway object  |
 
 ## Usage
 
