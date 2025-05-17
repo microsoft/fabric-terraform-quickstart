@@ -7,14 +7,19 @@ includes:
   internal: internal.yml
 
 tasks:
+  # * Install YAMLlint
+  install:yamllint:
+    desc: Install YAMLlint
+    cmds:
+      - task: internal:install:pipx
+        vars:
+          APP: yamllint
+
   # * Tools
   tools:
     desc: Install YAML tools
     cmds:
-      - for: [yamllint]
-        task: internal:install:pipx
-        vars:
-          APP: "{{.ITEM}}"
+      - task: install:yamllint
 
   # * Lint
   lint:
