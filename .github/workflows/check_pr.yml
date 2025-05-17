@@ -56,18 +56,18 @@ jobs:
       - name: 📃 Generate docs
         run: task docs
 
-      - name: 🤖 Bot Details
+      - name: 🤖 Bot details
         if: github.actor == 'dependabot[bot]'
         id: bot-details
         uses: raven-actions/bot-details@b2d5fd6eb98adc0cb67df864daa834849f3a8bc0 # v1.1.0
         with:
           bot-slug-name: dependabot
 
-      - name: 📤 Dependabot auto-commit
+      - name: 📤 Dependabot auto-commit (docs)
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         if: github.actor == 'dependabot[bot]'
         with:
-          commit_message: "docs: update documentation"
+          commit_message: "docs: automatic updates"
           commit_user_name: ${{ steps.bot-details.outputs.name }}
           commit_user_email: ${{ steps.bot-details.outputs.email }}
           commit_options: "--no-verify --signoff"
@@ -81,7 +81,7 @@ jobs:
       - name: ✔️ Run linters
         run: task lint
 
-      - name: 📤 Dependabot auto-commit
+      - name: 📤 Dependabot auto-commit (lint)
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         if: github.actor == 'dependabot[bot]'
         with:
