@@ -7,27 +7,16 @@ includes:
   internal: internal.yml
 
 tasks:
-  # * Tools
-  tools:
-    desc: Install Security tools
+  # * Install Gitleaks
+  install:gitleaks:
+    desc: Install Gitleaks
     cmds:
-      - for: [Gitleaks.Gitleaks, AquaSecurity.Trivy]
-        task: internal:install:winget
+      - task: internal:install:winget
         vars:
-          APP: "{{.ITEM}}"
-        platforms: [windows]
-      - for: [gitleaks, trivy]
-        task: internal:install:brew
+          APP: "Gitleaks.Gitleaks"
+      - task: internal:install:brew
         vars:
-          APP: "{{.ITEM}}"
-        platforms: [darwin]
-      - cmd: |
-          sudo apt-get install wget gnupg
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install trivy
-        platforms: [linux]
+          APP: gitleaks
       - cmd: |
           arch=$(uname -m)
           if [[ "${arch}" == "x86_64" ]]; then
@@ -44,10 +33,40 @@ tasks:
           rm /tmp/gitleaks.tar.gz
           sudo mv /tmp/gitleaks /usr/local/bin/gitleaks
         platforms: [linux]
-      - for: [checkov]
-        task: internal:install:pipx
+
+  # * Install Trivy
+  install:trivy:
+    desc: Install Trivy
+    cmds:
+      - task: internal:install:winget
         vars:
-          APP: "{{.ITEM}}"
+          APP: "AquaSecurity.Trivy"
+      - task: internal:install:brew
+        vars:
+          APP: trivy
+      - cmd: |
+          sudo apt-get install wget gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+        platforms: [linux]
+
+  # * Install Checkov
+  install:checkov:
+    desc: Install Checkov
+    cmds:
+      - task: internal:install:pipx
+        vars:
+          APP: checkov
+
+  # * Tools
+  tools:
+    desc: Install Security tools
+    cmds:
+      - task: install:gitleaks
+      - task: install:trivy
+      - task: install:checkov
 
   # * Lint
   lint:
