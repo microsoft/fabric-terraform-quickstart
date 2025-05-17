@@ -19,8 +19,8 @@ permissions:
   statuses: write
 
 jobs:
-  main:
-    name: Check Semantic PR
+  semantic_pr:
+    name: Semantic PR
     runs-on: ubuntu-24.04
     steps:
       - name: 🔍 Run Semantic PR validation

@@ -5,6 +5,7 @@
     "redhat.vscode-yaml",
     "golang.go",
     "DavidAnson.vscode-markdownlint",
-    "task.vscode-task"
+    "task.vscode-task",
+    "sanjulaganepola.github-local-actions"
   ]
 }

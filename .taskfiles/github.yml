@@ -7,20 +7,44 @@ includes:
   internal: internal.yml
 
 tasks:
-  # * Tools
-  tools:
-    desc: Install GitHub tools
+  # * Install Actionlint
+  install:actionlint:
+    desc: Install Actionlint
     cmds:
-      - for: [GitHub.cli, rhysd.actionlint, nektos.act]
-        task: internal:install:winget
+      - task: internal:install:winget
         vars:
-          APP: "{{.ITEM}}"
-        platforms: [windows]
-      - for: [gh, actionlint, act]
-        task: internal:install:brew
+          APP: "rhysd.actionlint"
+      - task: internal:install:brew
         vars:
-          APP: "{{.ITEM}}"
-        platforms: [darwin]
+          APP: actionlint
+      - cmd: |
+          curl --proto '=https' --tlsv1.2 -sSf  https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | sudo bash -s -- latest /usr/local/bin
+        platforms: [linux]
+
+  # * Install ACT
+  install:act:
+    desc: Install ACT
+    cmds:
+      - task: internal:install:winget
+        vars:
+          APP: "nektos.act"
+      - task: internal:install:brew
+        vars:
+          APP: act
+      - cmd: |
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash -s -- -b /usr/local/bin
+        platforms: [linux]
+
+  # * Install GitHub CLI
+  install:gh:
+    desc: Install GitHub CLI
+    cmds:
+      - task: internal:install:winget
+        vars:
+          APP: "GitHub.cli"
+      - task: internal:install:brew
+        vars:
+          APP: gh
       - cmd: |
           (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
             && sudo mkdir -p -m 755 /etc/apt/keyrings \
@@ -31,12 +55,14 @@ tasks:
             && sudo apt update \
             && sudo apt install gh -y
         platforms: [linux]
-      - cmd: |
-          curl --proto '=https' --tlsv1.2 -sSf  https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | sudo bash -s -- latest /usr/local/bin
-        platforms: [linux]
-      - cmd: |
-          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash -s -- -b /usr/local/bin
-        platforms: [linux]
+
+  # * Tools
+  tools:
+    desc: Install GitHub tools
+    cmds:
+      - task: install:actionlint
+      - task: install:act
+      - task: install:gh
 
   # * Lint
   lint:

@@ -20,8 +20,8 @@ permissions:
   checks: write
 
 jobs:
-  main:
-    name: Check Dependency
+  dependency_review:
+    name: Dependency Review
     runs-on: ubuntu-24.04
     steps:
       - name: ⤵️ Checkout

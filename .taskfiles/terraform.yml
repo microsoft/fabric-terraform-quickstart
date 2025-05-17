@@ -7,26 +7,52 @@ includes:
   internal: internal.yml
 
 tasks:
-  # * Tools
-  tools:
-    desc: Install Terraform tools
+  # * Install Terraform
+  install:terraform:
+    desc: Install Terraform
     cmds:
-      - for:
-          [
-            HashiCorp.Terraform,
-            Terraform-docs.Terraform-docs,
-            OpenTofu.Tofu,
-            TerraformLinters.tflint,
-          ]
-        task: internal:install:winget
+      - task: internal:install:winget
         vars:
-          APP: "{{.ITEM}}"
-        platforms: [windows]
+          APP: "HashiCorp.Terraform"
+      - task: internal:install:brew:tap
+        vars:
+          APP: "hashicorp/tap"
+      - task: internal:install:brew
+        vars:
+          APP: "hashicorp/tap/terraform"
       - cmd: |
           wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
           sudo apt update && sudo apt install terraform
         platforms: [linux]
+
+  # * Install OpenTofu
+  install:opentofu:
+    desc: Install OpenTofu
+    cmds:
+      - task: internal:install:winget
+        vars:
+          APP: "OpenTofu.Tofu"
+      - task: internal:install:brew
+        vars:
+          APP: "opentofu"
+      - cmd: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
+          chmod +x install-opentofu.sh
+          ./install-opentofu.sh --install-method deb
+          rm -f install-opentofu.sh
+        platforms: [linux]
+
+  # * Install Terraform-Docs
+  install:terraform-docs:
+    desc: Install Terraform-Docs
+    cmds:
+      - task: internal:install:winget
+        vars:
+          APP: "Terraform-docs.Terraform-docs"
+      - task: internal:install:brew
+        vars:
+          APP: "terraform-docs"
       - cmd: |
           arch=$(uname -m)
           if [[ "${arch}" == "x86_64" ]]; then
@@ -44,40 +70,50 @@ tasks:
           chmod +x /tmp/terraform-docs
           sudo mv /tmp/terraform-docs /usr/local/bin/terraform-docs
         platforms: [linux]
+
+  # * Install TFLint
+  install:tflint:
+    desc: Install TFLint
+    cmds:
+      - task: internal:install:winget
+        vars:
+          APP: "TerraformLinters.TFLint"
+      - task: internal:install:brew
+        vars:
+          APP: "tflint"
       - cmd: |
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
         platforms: [linux]
-      - for: [hashicorp/tap]
-        task: internal:install:brew:tap
-        vars:
-          APP: "{{.ITEM}}"
-        platforms: [darwin]
-      - for: [hashicorp/tap/terraform, terraform-docs, opentofu, tflint]
-        task: internal:install:brew
-        vars:
-          APP: "{{.ITEM}}"
-        platforms: [darwin]
-      - cmd: |
-          curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
-          chmod +x install-opentofu.sh
-          ./install-opentofu.sh --install-method deb
-          rm -f install-opentofu.sh
-        platforms: [linux]
-      - cmd: |
-          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
-          tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
-          install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
-        platforms: [linux]
-      - cmd: |
-          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Darwin_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
-          tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
-          install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
-        platforms: [darwin]
+
+  # * Install Terrascan
+  install:terrascan:
+    desc: Install Terrascan
+    cmds:
       - cmd: |
           {{.PWSH}} 'Invoke-WebRequest -Uri ((Invoke-RestMethod https://api.github.com/repos/tenable/terrascan/releases/latest).assets | Where-Object { $_.browser_download_url -match "Windows_x86_64\.tar\.gz$" } | Select-Object -ExpandProperty browser_download_url) -OutFile "$env:TMP\terrascan.tar.gz"'
           {{.PWSH}} 'tar -xzf "$env:TMP\terrascan.tar.gz" -C "$env:TMP" terrascan.exe'
           {{.PWSH}} 'Remove-Item "$env:TMP\terrascan.tar.gz" -Force'
         platforms: [windows]
+      - cmd: |
+          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Darwin_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
+          tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
+          sudo install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
+        platforms: [darwin]
+      - cmd: |
+          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
+          tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
+          sudo install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
+        platforms: [linux]
+
+  # * Tools
+  tools:
+    desc: Install Terraform tools
+    cmds:
+      - task: install:terraform
+      - task: install:opentofu
+      - task: install:terraform-docs
+      - task: install:tflint
+      # - task: install:terrascan
 
   # * Lint
   lint:
