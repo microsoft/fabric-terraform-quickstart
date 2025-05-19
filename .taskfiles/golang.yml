@@ -7,26 +7,34 @@ includes:
   internal: internal.yml
 
 tasks:
+  # * Install golangci-lint
+  install:golangci-lint:
+    desc: Install golangci-lint
+    cmds:
+      - task: internal:install:winget
+        vars:
+          APP: "GolangCI.golangci-lint"
+      - task: internal:install:brew
+        vars:
+          APP: golangci-lint
+      - cmd: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" latest
+        platforms: [linux]
+
+  # * Install govulncheck
+  install:govulncheck:
+    desc: Install govulncheck
+    cmds:
+      - task: internal:install:go
+        vars:
+          APP: "golang.org/x/vuln/cmd/govulncheck@latest"
+
   # * Tools
   tools:
     desc: Install GoLang tools
     cmds:
-      - for: [GolangCI.golangci-lint]
-        task: internal:install:winget
-        vars:
-          APP: "{{.ITEM}}"
-        platforms: [windows]
-      - for: [golangci-lint]
-        task: internal:install:brew
-        vars:
-          APP: "{{.ITEM}}"
-        platforms: [darwin]
-      - cmd: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" latest
-        platforms: [linux]
-      - for: [golang.org/x/vuln/cmd/govulncheck@latest]
-        task: internal:install:go
-        vars:
-          APP: "{{.ITEM}}"
+      - task: install:golangci-lint
+      - task: install:govulncheck
 
   # * Lint
   lint:

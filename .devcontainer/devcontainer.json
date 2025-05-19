@@ -11,7 +11,7 @@
       "configureZshAsDefaultShell": true
     },
     "ghcr.io/devcontainers/features/go:1": {
-      "version": "1.24.3"
+      "version": "1.24"
     },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.13",
@@ -74,12 +74,12 @@
         "GitHub.vscode-github-actions",
         "EditorConfig.EditorConfig",
         "eamodio.gitlens",
-        "humao.rest-client",
         "DavidAnson.vscode-markdownlint",
         "bierner.github-markdown-preview",
         "darkriszty.markdown-table-prettify",
         "TakumiI.markdowntable",
         "hashicorp.terraform",
+        "hashicorp.hcl",
         "ms-azuretools.vscode-azureterraform",
         "ms-azuretools.vscode-docker",
         "ms-vscode-remote.vscode-remote-extensionpack",
@@ -87,11 +87,11 @@
         "ms-vscode.remote-repositories",
         "ms-vscode-remote.remote-ssh-edit",
         "fnando.linter",
-        "42Crunch.vscode-openapi",
         "task.vscode-task",
         "aaron-bond.better-comments",
         "usernamehw.errorlens",
-        "MS-SarifVSCode.sarif-viewer"
+        "MS-SarifVSCode.sarif-viewer",
+        "SanjulaGanepola.github-local-actions"
       ]
     }
   },
