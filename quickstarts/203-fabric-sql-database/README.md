@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# Fabric SQL Database (200 level)
+# Fabric SQL Database (100 level)
 
 ---
 
