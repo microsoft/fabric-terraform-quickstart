@@ -4,7 +4,7 @@
 ---
 name: 🔍 Check PR
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
     types:
@@ -118,7 +118,7 @@ jobs:
 
       - name: 🤝 Enable auto-merge
         if: github.event.pull_request.user.login == 'dependabot[bot]'
-        run: gh pr merge --auto --delete-branch --squash "${PR_URL}"
+        run: gh pr merge --auto --squash "${PR_URL}"
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
