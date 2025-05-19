@@ -54,7 +54,7 @@ tasks:
       - task: yml:tools
 
   lint:
-    desc: Lint files
+    desc: Lint, format, check files
     cmds:
       - task: gh:lint
       - task: go:lint

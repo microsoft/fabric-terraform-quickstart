@@ -20,4 +20,11 @@ words:
   - MSRC
   - upns
   - azuread
+  - tfenv
+  - goenv
+  - tfutils
+  - golangci
+  - govulncheck
+  - stefanzweifel
+  - ghsa
 allowCompoundWords: true

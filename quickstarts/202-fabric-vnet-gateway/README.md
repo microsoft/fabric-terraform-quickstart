@@ -55,10 +55,11 @@ No modules.
 
 ## Outputs
 
-| Name             | Description                |
-|------------------|----------------------------|
-| fabric\_capacity | The Fabric Capacity object |
-| fabric\_gateway  | The Fabric Gateway object  |
+| Name                      | Description                      |
+|---------------------------|----------------------------------|
+| azurerm\_subnet           | The Azure VNet Subnet object     |
+| azurerm\_virtual\_network | The Azure Virtual Network object |
+| fabric\_gateway           | The Fabric Gateway object        |
 
 ## Usage
 

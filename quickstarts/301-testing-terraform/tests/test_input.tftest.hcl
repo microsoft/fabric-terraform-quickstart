@@ -1,10 +1,13 @@
 run "valid_workspace_display_name" {
-
-  command = plan
-
   variables {
     workspace_name = "test_workspace"
+    principal = {
+      id   = "00000000-0000-0000-0000-000000000000"
+      type = "User"
+    }
   }
+
+  command = plan
 
   assert {
     condition     = fabric_workspace.example.display_name == "test_workspace"
@@ -14,21 +17,30 @@ run "valid_workspace_display_name" {
 }
 
 run "invalid_workspace_role_assignment_principal" {
-
   variables {
-    principal_id = "test_workspace"
+    principal = {
+      id   = "test"
+      type = "User"
+    }
   }
 
-  command         = plan
-  expect_failures = [var.principal_id]
+  command = plan
+
+  expect_failures = [var.principal.id]
 }
 
 run "valid_default_workspace_role_assignment_principal" {
+  variables {
+    principal = {
+      id   = "00000000-0000-0000-0000-000000000000"
+      type = "ServicePrincipal"
+    }
+  }
 
   command = plan
 
   assert {
-    condition     = fabric_workspace_role_assignment.example.principal_id == "96ce09da-4aab-46b5-b8ac-529f35944c83"
+    condition     = fabric_workspace_role_assignment.example.principal.id == "00000000-0000-0000-0000-000000000000"
     error_message = "invalid workspace role assignment principal_id"
   }
 }

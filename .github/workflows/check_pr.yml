@@ -4,19 +4,25 @@
 ---
 name: 🔍 Check PR
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
     types:
       - opened
       - synchronize
+  merge_group:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: ${{ format('{0}-{1}-{2}-{3}-{4}', github.workflow, github.event_name, github.ref, github.base_ref || null, github.head_ref || null) }}
   cancel-in-progress: true
+
+env:
+  PR_URL: ${{ github.event.pull_request_target.html_url || github.event.pull_request.html_url }}
+  PR_NUMBER: ${{ github.event.pull_request_target.number || github.event.pull_request.number }}
 
 jobs:
   check_pr:
@@ -57,7 +63,7 @@ jobs:
         run: task docs
 
       - name: 🤖 Bot details
-        if: github.actor == 'dependabot[bot]'
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
         id: bot-details
         uses: raven-actions/bot-details@b2d5fd6eb98adc0cb67df864daa834849f3a8bc0 # v1.1.0
         with:
@@ -65,7 +71,7 @@ jobs:
 
       - name: 📤 Dependabot auto-commit (docs)
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
-        if: github.actor == 'dependabot[bot]'
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
         with:
           commit_message: "docs: automatic updates"
           commit_user_name: ${{ steps.bot-details.outputs.name }}
@@ -73,7 +79,7 @@ jobs:
           commit_options: "--no-verify --signoff"
 
       - name: 🔀 Check for differences
-        if: github.actor != 'dependabot[bot]'
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
         run: |
           git diff --compact-summary --exit-code || \
             (echo; echo "🛑 Unexpected difference. Run 'task docs' command and commit."; git diff --exit-code)
@@ -83,7 +89,7 @@ jobs:
 
       - name: 📤 Dependabot auto-commit (lint)
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
-        if: github.actor == 'dependabot[bot]'
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
         with:
           commit_message: "style: linters automatic fixes"
           commit_user_name: ${{ steps.bot-details.outputs.name }}
@@ -91,7 +97,42 @@ jobs:
           commit_options: "--no-verify --signoff"
 
       - name: 🔀 Check for differences
-        if: github.actor != 'dependabot[bot]'
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
         run: |
           git diff --compact-summary --exit-code || \
             (echo; echo "🛑 Unexpected difference. Run 'task lint' command and commit."; git diff --exit-code)
+
+      - name: 📝 Fetch Dependabot metadata
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@08eff52bf64351f401fb50d4972fa95b9f2c2d1b # v2.4.0
+        with:
+          alert-lookup: true
+          compat-lookup: true
+
+      - name: 🏷️ Label (security)
+        if: github.event.pull_request.user.login == 'dependabot[bot]' && (steps.dependabot-metadata.outputs.ghsa-id != '' || steps.dependabot-metadata.outputs.cvss != 0)
+        run: gh pr edit --add-label "area/security" "${PR_URL}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: 🤝 Enable auto-merge
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        run: gh pr merge --auto --delete-branch --squash "${PR_URL}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: 🔂 Check for changes
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: filter
+        with:
+          filters: |
+            tf:
+              - '**.tf'
+              - '**.tfvars'
+              - '**.tfvars.json'
+              - '**.tftest.hcl'
+
+      - name: 🧪 Run Terraform unit tests
+        if: steps.filter.outputs.tf == 'true'
+        run: task tf:test:unit:all

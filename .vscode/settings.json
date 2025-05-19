@@ -39,6 +39,7 @@
   "markdownlint.config": {
     "extends": "./.markdownlint.yml"
   },
+  "markdowntable.paddedDelimiterRowPipes": false,
   // go
   "go.useLanguageServer": true,
   "go.toolsManagement.autoUpdate": true,
