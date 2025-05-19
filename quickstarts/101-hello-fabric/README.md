@@ -1,36 +1,44 @@
 <!-- BEGIN_TF_DOCS -->
 # Hello Fabric (100 level)
+
 ---
+
 ## Requirements
 
-| Name | Version |
-|------|---------|
+| Name      | Version       |
+|-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| fabric | 1.1.0 |
+| fabric    | 1.1.0         |
+
 ## Providers
 
-| Name | Version |
-|------|---------|
-| fabric | 1.1.0 |
+| Name   | Version |
+|--------|---------|
+| fabric | 1.1.0   |
+
 ## Modules
 
 No modules.
+
 ## Resources
 
-| Name | Type |
-|------|------|
+| Name                                                                                                                | Type     |
+|---------------------------------------------------------------------------------------------------------------------|----------|
 | [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/workspace) | resource |
+
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| workspace\_name | Name of the Workspace | `string` | n/a | yes |
+| Name            | Description           | Type     | Default | Required |
+|-----------------|-----------------------|----------|---------|:--------:|
+| workspace\_name | Name of the Workspace | `string` | n/a     |   yes    |
+
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| workspace | The Fabric workspace object |
-| workspace\_id | The Fabric workspace ID |
+| Name          | Description                 |
+|---------------|-----------------------------|
+| workspace     | The Fabric workspace object |
+| workspace\_id | The Fabric workspace ID     |
+
 ## Usage
 
 Execute example with the following commands:
