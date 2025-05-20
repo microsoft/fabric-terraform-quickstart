@@ -118,10 +118,18 @@ tasks:
   # * Lint
   lint:
     desc: Run Terraform linters
+    vars:
+      ITEMS:
+        sh: "task tf:get:modules"
     cmds:
       - terraform fmt -recursive
       - tflint --init --config "$(pwd)/.tflint.hcl"
       - tflint --recursive --fix --config "$(pwd)/.tflint.hcl"
+      - for: { var: ITEMS }
+        cmd: |
+          pushd "{{osClean .ITEM}}"
+          terraform validate
+          popd
     dir: "{{.ROOT_DIR}}"
 
   # * Docs
