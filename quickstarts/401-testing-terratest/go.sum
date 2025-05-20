@@ -63,8 +63,8 @@ github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
 github.com/mattn/go-zglob v0.0.2-0.20190814121620-e3c945676326 h1:ofNAzWCcyTALn2Zv40+8XitdzCgXY6e9qvXwN9W0YXg=
 github.com/mattn/go-zglob v0.0.2-0.20190814121620-e3c945676326/go.mod h1:9fxibJccNxU2cnpIKLRRFA7zX7qhkJIQWBb449FYHOo=
-github.com/microsoft/fabric-sdk-go v0.4.0 h1:rtlz1b20qCXVdr+LiaVPh9XapbBnnMRVytzaxD+7Vxg=
-github.com/microsoft/fabric-sdk-go v0.4.0/go.mod h1:1zql64r0BGvUqxRtvK9WzRMdX+fpBCNYIWBpcFRGJLk=
+github.com/microsoft/fabric-sdk-go v0.5.0 h1:H9CaBGqM0Qbk2RkpivZOTgQhEgUfVoTzjyMIL8lTXiE=
+github.com/microsoft/fabric-sdk-go v0.5.0/go.mod h1:1zql64r0BGvUqxRtvK9WzRMdX+fpBCNYIWBpcFRGJLk=
 github.com/mitchellh/go-homedir v1.1.0 h1:lukF9ziXFxDFPkA1vsr5zpc1XuPDn/wFntq5mG+4E0Y=
 github.com/mitchellh/go-homedir v1.1.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/mitchellh/go-testing-interface v1.14.1 h1:jrgshOhYAUVNMAJiKbEu7EqAwgJJ2JqpQmpLJOu07cU=
