@@ -10,12 +10,19 @@ variable "workspace_description" {
   default     = "test_description"
 }
 
-variable "principal_id" {
+variable "principal" {
   description = "Workspace role assignment Principal ID"
-  type        = string
-  default     = "96ce09da-4aab-46b5-b8ac-529f35944c83"
+  type = object({
+    id   = string
+    type = string
+  })
   validation {
-    condition     = can(regex("^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$", var.principal_id))
-    error_message = "invalid workspace role assignment principal_id format"
+    condition     = can(regex("^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$", var.principal.id))
+    error_message = "Please specify a valid principal ID."
+  }
+
+  validation {
+    condition     = contains(["User", "Group", "ServicePrincipal"], var.principal.type)
+    error_message = "Please specify a valid principal type."
   }
 }

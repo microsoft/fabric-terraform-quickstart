@@ -4,5 +4,5 @@ Automated tests can be written to verify Fabric resources deployment using the F
 
 Checkout how to write automated unit tests against this module using [Terraform](https://developer.hashicorp.com/terraform/cli/test) in the sample tests:
 
-- [tests/unit_test.tftest.hcl](./tests/unit_test.tftest.hcl)
-- [tests/input_validations.tftest.hcl](./tests/input_validations.tftest.hcl)
+- [tests/test_unit.tftest.hcl](./tests/test_unit.tftest.hcl)
+- [tests/test_input.tftest.hcl](./tests/test_input.tftest.hcl)

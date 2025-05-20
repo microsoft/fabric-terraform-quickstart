@@ -1,5 +1,6 @@
 # Local .terraform directories
 **/.terraform/*
+**/.external_modules/*
 
 # .tfstate files
 *.tfstate
@@ -42,3 +43,8 @@ terraform.rc
 
 # Ignore cache files
 .lycheecache
+
+# Ignore test result files
+*test*-results*.xml
+
+**/.task/*

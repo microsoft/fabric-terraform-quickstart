@@ -16,5 +16,5 @@ Running Terraform tests:
 terraform test
 
 # Run selected test
-terraform test -filter=tests/unit_test.tftest.hcl
+terraform test -filter tests/test_unit.tftest.hcl
 ```

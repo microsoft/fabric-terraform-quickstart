@@ -5,8 +5,8 @@ Automated tests can be written to verify Fabric resources deployment using the F
 
 Checkout how to write automated unit tests against this module using [Terraform](https://developer.hashicorp.com/terraform/cli/test) in the sample tests:
 
-- [tests/unit\_test.tftest.hcl](./tests/unit\_test.tftest.hcl)
-- [tests/input\_validations.tftest.hcl](./tests/input\_validations.tftest.hcl)
+- [tests/test\_unit.tftest.hcl](./tests/test\_unit.tftest.hcl)
+- [tests/test\_input.tftest.hcl](./tests/test\_input.tftest.hcl)
 
 ---
 
@@ -36,11 +36,11 @@ No modules.
 
 ## Inputs
 
-| Name                   | Description                            | Type     | Default                                  | Required |
-|------------------------|----------------------------------------|----------|------------------------------------------|:--------:|
-| principal\_id          | Workspace role assignment Principal ID | `string` | `"96ce09da-4aab-46b5-b8ac-529f35944c83"` |    no    |
-| workspace\_description | Description of the Workspace           | `string` | `"test_description"`                     |    no    |
-| workspace\_name        | Name of the Workspace                  | `string` | `"test_workspace"`                       |    no    |
+| Name                   | Description                            | Type                                                                     | Default              | Required |
+|------------------------|----------------------------------------|--------------------------------------------------------------------------|----------------------|:--------:|
+| principal              | Workspace role assignment Principal ID | <pre>object({<br/>    id   = string<br/>    type = string<br/>  })</pre> | n/a                  |   yes    |
+| workspace\_description | Description of the Workspace           | `string`                                                                 | `"test_description"` |    no    |
+| workspace\_name        | Name of the Workspace                  | `string`                                                                 | `"test_workspace"`   |    no    |
 
 ## Outputs
 
@@ -67,7 +67,7 @@ Running Terraform tests:
 terraform test
 
 # Run selected test
-terraform test -filter=tests/unit_test.tftest.hcl
+terraform test -filter tests/test_unit.tftest.hcl
 ```
 
 ## Limitations and Considerations

@@ -129,23 +129,18 @@ tasks:
     desc: Generate Terraform documentation
     vars:
       ITEMS:
-        sh: |
-          {{if eq OS "windows"}}
-            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform|.external_modules)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
-          {{else}}
-            find . -mindepth 2 -not -path "*/.terraform/*" -not -path "*/.external_modules/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
-          {{end}}
+        sh: "task tf:get:modules"
     cmds:
       - for: { var: ITEMS }
-        cmd: terraform-docs -c ./.terraform-docs.yml "{{clean .ITEM}}"
+        cmd: terraform-docs -c ./.terraform-docs.yml "{{osClean .ITEM}}"
       # - for: { var: ITEMS }
       #   cmd: |
-      #     {{.PWSH}} '$name = Split-Path "{{clean .ITEM}}" -Leaf; (Get-Content "./{{clean .ITEM}}/README.md") -replace "__NAME__", $name | Set-Content "./{{clean .ITEM}}/README.md"'
+      #     {{.PWSH}} '$name = Split-Path "{{osClean .ITEM}}" -Leaf; (Get-Content "./{{osClean .ITEM}}/README.md") -replace "__NAME__", $name | Set-Content "./{{osClean .ITEM}}/README.md"'
       #   platforms: [windows]
       # - for: { var: ITEMS }
       #   cmd: |
-      #     sed -i "s/__NAME__/$(basename "{{clean .ITEM}}")/g" "./{{clean .ITEM}}/README.md"
-      #     sed -i -e '$a\' "./{{clean .ITEM}}/README.md"
+      #     sed -i "s/__NAME__/$(basename "{{osClean .ITEM}}")/g" "./{{osClean .ITEM}}/README.md"
+      #     sed -i -e '$a\' "./{{osClean .ITEM}}/README.md"
       #   platforms: [linux, darwin]
     dir: "{{.ROOT_DIR}}"
 
@@ -167,20 +162,81 @@ tasks:
         platforms: [windows]
     dir: "{{.ROOT_DIR}}"
 
-  init:
-    desc: Run terraform init on all modules
+  test:unit:all:
+    desc: Run terraform unit tests on all modules
     vars:
       ITEMS:
-        sh: |
-          {{if eq OS "windows"}}
-            {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform|.external_modules)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
-          {{else}}
-            find . -mindepth 2 -not -path "*/.terraform/*" -not -path "*/.external_modules/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
-          {{end}}
+        sh: "task tf:get:modules"
     cmds:
       - for: { var: ITEMS }
         cmd: |
-          pushd {{.ITEM}}
-          terraform init -upgrade -backend=false
+          pushd "{{osClean .ITEM}}"
+          task tf:test:unit
           popd
+
+  test:acc:all:
+    desc: Run terraform unit tests on all modules
+    vars:
+      ITEMS:
+        sh: "task tf:get:modules"
+    cmds:
+      - for: { var: ITEMS }
+        cmd: |
+          pushd "{{osClean .ITEM}}"
+          task tf:test:acc
+          popd
+
+  test:unit:
+    desc: Run terraform unit tests
+    vars:
+      ITEMS:
+        sh: "task tf:get:test:unit"
+    cmds:
+      - terraform init -upgrade -backend=false
+      - for: { var: ITEMS }
+        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testunit-results.xml
+    dir: "{{.USER_WORKING_DIR}}"
+
+  test:acc:
+    desc: Run terraform acceptance tests
+    vars:
+      ITEMS:
+        sh: "task tf:get:test:acc"
+    cmds:
+      - terraform init -upgrade -backend=false
+      - for: { var: ITEMS }
+        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testacc-results.xml
+    dir: "{{.USER_WORKING_DIR}}"
+
+  get:modules:
+    desc: Get all TF modules
+    silent: true
+    cmds:
+      - cmd: find . -mindepth 2 -not -path "*/.terraform/*" -not -path "*/.external_modules/*" -type f -name "*.tf" -exec dirname {} \; | sort -u
+        platforms: [linux, darwin]
+      - cmd: |
+          {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform|.external_modules)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
+        platforms: [windows]
     dir: "{{.ROOT_DIR}}"
+
+  get:test:unit:
+    desc: Get all unit test
+    silent: true
+    sources:
+      - "**/*unit*.tftest.hcl"
+    cmds:
+      - for: sources
+        cmd: echo "{{osClean .ITEM }}"
+    method: none
+    dir: "{{.USER_WORKING_DIR}}"
+
+  get:test:acc:
+    desc: Get all acceptance tests
+    silent: true
+    sources:
+      - "**/*acc*.tftest.hcl"
+    cmds:
+      - for: sources
+        cmd: echo "{{osClean .ITEM }}"
+    method: none
+    dir: "{{.USER_WORKING_DIR}}"

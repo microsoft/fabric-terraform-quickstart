@@ -17,15 +17,18 @@ func TestTerraform_Workspace(t *testing.T) {
 
 	expectedWorkspaceName := "test-workspace"
 	expectedWorkspaceDescription := "test-workspace-description"
-	expectedRoleAssignmentPrincipalID := "96ce09da-4aab-46b5-b8ac-529f35944c83"
+	expectedRoleAssignmentPrincipalID := "bb978eea-7929-4d11-86e5-4c50a643e510"
 
 	// Configure Terraform setting up a path to Terraform code.
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "./../301-testing-terraform",
 		Vars: map[string]any{
-			"workspace_name":        expectedWorkspaceName,
-			"principal_id":          expectedRoleAssignmentPrincipalID,
+			"workspace_name": expectedWorkspaceName,
+			"principal": map[string]any{
+				"id":   expectedRoleAssignmentPrincipalID,
+				"type": "ServicePrincipal",
+			},
 			"workspace_description": expectedWorkspaceDescription,
 		},
 		Reconfigure: true,
@@ -45,7 +48,7 @@ func TestTerraform_Workspace(t *testing.T) {
 	expectedWorkspaceRoleAssignmentID := terraform.Output(t, terraformOptions, "workspace_role_assignment_id")
 
 	// Get actual values from the SDK
-	credentials, _ := azidentity.NewAzureCLICredential(nil)
+	credentials, _ := azidentity.NewDefaultAzureCredential(&azidentity.DefaultAzureCredentialOptions{})
 	client, _ := fabcore.NewClientFactory(credentials, nil, nil)
 
 	workspaceClient := client.NewWorkspacesClient()

@@ -4,8 +4,7 @@ resource "fabric_workspace" "example" {
 }
 
 resource "fabric_workspace_role_assignment" "example" {
-  workspace_id   = fabric_workspace.example.id
-  principal_id   = var.principal_id
-  principal_type = "User"
-  role           = "Admin"
+  workspace_id = fabric_workspace.example.id
+  principal    = var.principal
+  role         = "Admin"
 }
