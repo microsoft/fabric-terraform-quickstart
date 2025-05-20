@@ -190,7 +190,7 @@ tasks:
     desc: Run terraform unit tests
     vars:
       ITEMS:
-        sh: "task tf:get:tests:unit"
+        sh: "task tf:get:test:unit"
     cmds:
       - terraform init -upgrade -backend=false
       - for: { var: ITEMS }
@@ -201,7 +201,7 @@ tasks:
     desc: Run terraform acceptance tests
     vars:
       ITEMS:
-        sh: "task tf:get:tests:acc"
+        sh: "task tf:get:test:acc"
     cmds:
       - terraform init -upgrade -backend=false
       - for: { var: ITEMS }
@@ -219,7 +219,7 @@ tasks:
         platforms: [windows]
     dir: "{{.ROOT_DIR}}"
 
-  get:tests:unit:
+  get:test:unit:
     desc: Get all unit test
     silent: true
     sources:
@@ -230,7 +230,7 @@ tasks:
     method: none
     dir: "{{.USER_WORKING_DIR}}"
 
-  get:tests:acc:
+  get:test:acc:
     desc: Get all acceptance tests
     silent: true
     sources:
