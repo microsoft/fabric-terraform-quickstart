@@ -1,4 +1,4 @@
-terraform {
+terraform { 
   required_version = ">= 1.8, < 2.0"
   required_providers {
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest
