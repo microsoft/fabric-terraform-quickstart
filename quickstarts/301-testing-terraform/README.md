@@ -15,13 +15,13 @@ Checkout how to write automated unit tests against this module using [Terraform]
 | Name      | Version       |
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| fabric    | 1.1.0         |
+| fabric    | 1.2.0         |
 
 ## Providers
 
 | Name   | Version |
 |--------|---------|
-| fabric | 1.1.0   |
+| fabric | 1.2.0   |
 
 ## Modules
 
@@ -31,8 +31,8 @@ No modules.
 
 | Name                                                                                                                                                | Type     |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/workspace)                                 | resource |
-| [fabric_workspace_role_assignment.example](https://registry.terraform.io/providers/microsoft/fabric/1.1.0/docs/resources/workspace_role_assignment) | resource |
+| [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.2.0/docs/resources/workspace)                                 | resource |
+| [fabric_workspace_role_assignment.example](https://registry.terraform.io/providers/microsoft/fabric/1.2.0/docs/resources/workspace_role_assignment) | resource |
 
 ## Inputs
 
