@@ -97,12 +97,12 @@ tasks:
       - cmd: |
           curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Darwin_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
           tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
-          sudo install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
+          sudo install /tmp/terrascan /usr/local/bin/terrascan && rm /tmp/terrascan
         platforms: [darwin]
       - cmd: |
           curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")" > /tmp/terrascan.tar.gz
           tar -xf /tmp/terrascan.tar.gz --directory /tmp terrascan && rm /tmp/terrascan.tar.gz
-          sudo install /tmp/terrascan /usr/local/bin && rm /tmp/terrascan
+          sudo install /tmp/terrascan /usr/local/bin/terrascan && rm /tmp/terrascan
         platforms: [linux]
 
   # * Tools
@@ -174,6 +174,24 @@ tasks:
           task tf:test:unit
           popd
 
+  test:unit:
+    desc: Run terraform unit tests
+    sources:
+      - "**/*unit*.tftest.hcl"
+    preconditions:
+      - sh: |
+          {{if eq OS "windows"}}
+            {{.PWSH}} 'if ((Get-ChildItem -Path . -Filter "*unit*.tftest.hcl" -Recurse).Count -eq 0) { exit 1 } else { exit 0 }'
+          {{else}}
+            [[ $(find . -name "*unit*.tftest.hcl" | wc -l) -gt 0 ]]
+          {{end}}
+        msg: "No unit tests found. Please create at least one unit test file named with pattern *unit*.tftest.hcl"
+    cmds:
+      - terraform init -upgrade -backend=false
+      - for: sources
+        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testunit-results.xml
+    dir: "{{.USER_WORKING_DIR}}"
+
   test:acc:all:
     desc: Run terraform unit tests on all modules
     vars:
@@ -186,25 +204,21 @@ tasks:
           task tf:test:acc
           popd
 
-  test:unit:
-    desc: Run terraform unit tests
-    vars:
-      ITEMS:
-        sh: "task tf:get:test:unit"
-    cmds:
-      - terraform init -upgrade -backend=false
-      - for: { var: ITEMS }
-        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testunit-results.xml
-    dir: "{{.USER_WORKING_DIR}}"
-
   test:acc:
     desc: Run terraform acceptance tests
-    vars:
-      ITEMS:
-        sh: "task tf:get:test:acc"
+    sources:
+      - "**/*acc*.tftest.hcl"
+    preconditions:
+      - sh: |
+          {{if eq OS "windows"}}
+            {{.PWSH}} 'if ((Get-ChildItem -Path . -Filter "*acc*.tftest.hcl" -Recurse).Count -eq 0) { exit 1 } else { exit 0 }'
+          {{else}}
+            [[ $(find . -name "*acc*.tftest.hcl" | wc -l) -gt 0 ]]
+          {{end}}
+        msg: "No acceptance tests found. Please create at least one acceptance test file named with pattern *acc*.tftest.hcl"
     cmds:
       - terraform init -upgrade -backend=false
-      - for: { var: ITEMS }
+      - for: sources
         cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testacc-results.xml
     dir: "{{.USER_WORKING_DIR}}"
 
@@ -218,25 +232,3 @@ tasks:
           {{.PWSH}} '(Get-ChildItem . *.tf -Recurse).DirectoryName | Where-Object {$_ -notmatch "\\(.terraform|.external_modules)\\" } | Select-Object -Unique | ForEach-Object { Resolve-Path -Relative $_ }'
         platforms: [windows]
     dir: "{{.ROOT_DIR}}"
-
-  get:test:unit:
-    desc: Get all unit test
-    silent: true
-    sources:
-      - "**/*unit*.tftest.hcl"
-    cmds:
-      - for: sources
-        cmd: echo "{{osClean .ITEM }}"
-    method: none
-    dir: "{{.USER_WORKING_DIR}}"
-
-  get:test:acc:
-    desc: Get all acceptance tests
-    silent: true
-    sources:
-      - "**/*acc*.tftest.hcl"
-    cmds:
-      - for: sources
-        cmd: echo "{{osClean .ITEM }}"
-    method: none
-    dir: "{{.USER_WORKING_DIR}}"

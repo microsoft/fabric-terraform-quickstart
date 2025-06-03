@@ -28,7 +28,7 @@
       "jaqVersion": "latest"
     },
     "ghcr.io/devcontainers/features/terraform:1": {
-      "version": "1.11.4",
+      "version": "1.12.1",
       "installSentinel": true,
       "installTFsec": false,
       "installTerraformDocs": true
@@ -36,7 +36,7 @@
     "ghcr.io/robbert229/devcontainer-features/opentofu:1": {
       "version": "1.9.1"
     },
-    "ghcr.io/devcontainers-contrib/features/go-task:1": {}
+    "ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
   },
   "onCreateCommand": {
     "chown-local": "sudo chown -R $(id -un):$(id -gn) $HOME/.local",
@@ -58,7 +58,8 @@
         "terminal.integrated.defaultProfile.osx": "zsh",
         "powershell.powerShellAdditionalExePaths": {
           "pwsh": "/usr/bin/pwsh"
-        }
+        },
+        "powershell.powerShellDefaultVersion": "pwsh"
       },
       "extensions": [
         "golang.go",
