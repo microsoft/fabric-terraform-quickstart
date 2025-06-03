@@ -10,6 +10,7 @@
   "editor.inlineSuggest.enabled": true,
   "editor.detectIndentation": true,
   "editor.formatOnSave": true,
+  "editor.bracketPairColorization.enabled": true,
   // git
   "git.autorefresh": true,
   "git.autofetch": true,
