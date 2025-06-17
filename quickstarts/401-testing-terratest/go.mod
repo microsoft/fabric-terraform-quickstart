@@ -5,7 +5,7 @@ go 1.24.3
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.10.1
 	github.com/gruntwork-io/terratest v0.50.0
-	github.com/microsoft/fabric-sdk-go v0.7.0
+	github.com/microsoft/fabric-sdk-go v0.8.1
 	github.com/stretchr/testify v1.10.0
 )
 
