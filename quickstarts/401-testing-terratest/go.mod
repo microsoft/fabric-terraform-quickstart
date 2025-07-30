@@ -1,6 +1,6 @@
 module terratests
 
-go 1.24.3
+go 1.24.5
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.10.1
