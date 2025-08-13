@@ -4,12 +4,12 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.38.1"
+      version = "4.39.0"
     }
     # https://registry.terraform.io/providers/hashicorp/azuread/latest
     azuread = {
       source  = "hashicorp/azuread"
-      version = "3.4.0"
+      version = "3.5.0"
     }
     # https://registry.terraform.io/providers/microsoft/fabric/latest
     fabric = {
