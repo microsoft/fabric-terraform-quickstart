@@ -1,0 +1,51 @@
+# Copyright (c) Microsoft Corporation
+# SPDX-License-Identifier: MPL-2.0
+
+# Example Terraform variables file for Fabric Monitoring and Logging
+# Copy this file to terraform.tfvars and update the values
+
+# Required variables
+solution_name        = "my-fabric-monitoring"
+subscription_id      = "12345678-1234-1234-1234-123456789012"
+fabric_capacity_name = "my-fabric-capacity"
+
+# Optional variables with defaults
+location    = "West US 2"
+environment = "dev"
+
+# Fabric workspace to monitor (optional)
+fabric_workspace_name = "my-fabric-workspace"
+
+# Alert configuration
+alert_email_addresses = [
+  "admin@contoso.com",
+  "ops-team@contoso.com"
+]
+
+alert_webhook_urls = [
+  # "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+  # "https://outlook.office.com/webhook/YOUR/TEAMS/WEBHOOK"
+]
+
+# Log retention (30-730 days)
+log_retention_days = 90
+
+# Alert thresholds (1-100%)
+cpu_threshold     = 80
+memory_threshold  = 85
+storage_threshold = 90
+
+# Alert frequency (1, 5, 10, 15, 30, 60 minutes)
+alert_frequency = 5
+
+# Feature toggles
+enable_dashboard           = true
+enable_application_insights = true
+
+# Additional tags
+tags = {
+  Owner       = "Platform Team"
+  CostCenter  = "IT-001"
+  Project     = "Fabric Monitoring"
+  Environment = "Development"
+}
