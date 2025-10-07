@@ -3,7 +3,7 @@ module terratests
 go 1.24.5
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.12.0
+	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.0
 	github.com/gruntwork-io/terratest v0.51.0
 	github.com/microsoft/fabric-sdk-go v0.12.0
 	github.com/stretchr/testify v1.11.1
