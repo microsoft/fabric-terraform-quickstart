@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation
 // SPDX-License-Identifier: MPL-2.0
 
-package terratests_test
+package terratests_test //revive:disable:package-directory-mismatch
 
 import (
 	"testing"
