@@ -4,7 +4,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.52.0"
+      version = "4.53.0"
     }
     # https://registry.terraform.io/providers/hashicorp/azuread/latest
     azuread = {
