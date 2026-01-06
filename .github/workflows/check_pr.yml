@@ -71,7 +71,7 @@ jobs:
           bot-slug-name: dependabot
 
       - name: 📤 Dependabot auto-commit (docs)
-        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         if: github.event.pull_request.user.login == 'dependabot[bot]'
         with:
           commit_message: "docs: automatic updates"
@@ -89,7 +89,7 @@ jobs:
         run: task lint
 
       - name: 📤 Dependabot auto-commit (lint)
-        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         if: github.event.pull_request.user.login == 'dependabot[bot]'
         with:
           commit_message: "style: linters automatic fixes"
@@ -106,7 +106,7 @@ jobs:
       - name: 📝 Fetch Dependabot metadata
         if: github.event.pull_request.user.login == 'dependabot[bot]'
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@08eff52bf64351f401fb50d4972fa95b9f2c2d1b # v2.4.0
+        uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
         with:
           alert-lookup: true
           compat-lookup: true
