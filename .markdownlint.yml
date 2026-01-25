@@ -31,3 +31,6 @@ MD041: false
 MD046:
   # Block style
   style: "fenced"
+
+# MD060/table-column-style - Table column style
+MD060: false
