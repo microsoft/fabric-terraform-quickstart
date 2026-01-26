@@ -38,10 +38,9 @@ variable "fabric_capacity_name" {
   type        = string
 }
 
-variable "fabric_workspace_name" {
-  description = "Name of the existing Fabric Workspace to monitor"
+variable "fabric_capacity_resource_group" {
+  description = "Resource group name where the Fabric Capacity is located"
   type        = string
-  default     = null
 }
 
 variable "alert_email_addresses" {

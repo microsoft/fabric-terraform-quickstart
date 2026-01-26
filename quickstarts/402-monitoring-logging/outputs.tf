@@ -98,8 +98,13 @@ output "diagnostic_setting_id" {
 
 # Monitored Resource outputs
 output "monitored_fabric_capacity_id" {
-  description = "ID of the monitored Fabric Capacity"
+  description = "Fabric GUID of the monitored Fabric Capacity"
   value       = data.fabric_capacity.monitored_capacity.id
+}
+
+output "monitored_fabric_capacity_arm_id" {
+  description = "Azure ARM resource ID of the monitored Fabric Capacity"
+  value       = data.azurerm_fabric_capacity.monitored_capacity.id
 }
 
 output "monitored_fabric_capacity_name" {
@@ -107,26 +112,21 @@ output "monitored_fabric_capacity_name" {
   value       = data.fabric_capacity.monitored_capacity.display_name
 }
 
-output "monitored_fabric_workspace_id" {
-  description = "ID of the monitored Fabric Workspace"
-  value       = var.fabric_workspace_name != null ? data.fabric_workspace.monitored_workspace[0].id : null
-}
-
 # Summary information
 output "monitoring_summary" {
   description = "Summary of monitoring configuration"
   value = {
-    solution_name        = var.solution_name
-    environment          = var.environment
-    monitored_capacity   = var.fabric_capacity_name
-    monitored_workspace  = var.fabric_workspace_name
-    log_retention_days   = var.log_retention_days
-    alert_email_count    = length(var.alert_email_addresses)
-    alert_webhook_count  = length(var.alert_webhook_urls)
-    cpu_threshold        = var.cpu_threshold
-    memory_threshold     = var.memory_threshold
-    storage_threshold    = var.storage_threshold
-    dashboard_enabled    = var.enable_dashboard
-    app_insights_enabled = var.enable_application_insights
+    solution_name         = var.solution_name
+    environment           = var.environment
+    monitored_capacity    = var.fabric_capacity_name
+    monitored_capacity_rg = var.fabric_capacity_resource_group
+    log_retention_days    = var.log_retention_days
+    alert_email_count     = length(var.alert_email_addresses)
+    alert_webhook_count   = length(var.alert_webhook_urls)
+    cpu_threshold         = var.cpu_threshold
+    memory_threshold      = var.memory_threshold
+    storage_threshold     = var.storage_threshold
+    dashboard_enabled     = var.enable_dashboard
+    app_insights_enabled  = var.enable_application_insights
   }
 }

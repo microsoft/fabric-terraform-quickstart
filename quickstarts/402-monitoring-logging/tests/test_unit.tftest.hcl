@@ -25,19 +25,19 @@ run "validate_log_analytics_workspace" {
 run "validate_application_insights" {
   command = plan
 
-  # Test Application Insights configuration
+  # Test Application Insights configuration (uses count, so access with [0])
   assert {
-    condition     = azurerm_application_insights.fabric_insights.name == "ai-${var.solution_name}"
+    condition     = azurerm_application_insights.fabric_insights[0].name == "ai-${var.solution_name}"
     error_message = "Application Insights name should follow naming convention"
   }
 
   assert {
-    condition     = azurerm_application_insights.fabric_insights.application_type == "web"
+    condition     = azurerm_application_insights.fabric_insights[0].application_type == "web"
     error_message = "Application Insights should be configured for web applications"
   }
 
   assert {
-    condition     = azurerm_application_insights.fabric_insights.workspace_id == azurerm_log_analytics_workspace.fabric_logs.id
+    condition     = azurerm_application_insights.fabric_insights[0].workspace_id == azurerm_log_analytics_workspace.fabric_logs.id
     error_message = "Application Insights should be linked to Log Analytics workspace"
   }
 }
@@ -81,14 +81,14 @@ run "validate_metric_alerts" {
 run "validate_dashboard" {
   command = plan
 
-  # Test that Azure Dashboard is created
+  # Test that Azure Dashboard is created (uses count, so access with [0])
   assert {
-    condition     = azurerm_dashboard.fabric_monitoring.name == "dashboard-${var.solution_name}"
+    condition     = azurerm_dashboard.fabric_monitoring[0].name == "dashboard-${var.solution_name}"
     error_message = "Dashboard name should follow naming convention"
   }
 
   assert {
-    condition     = length(azurerm_dashboard.fabric_monitoring.dashboard_properties) > 0
+    condition     = length(azurerm_dashboard.fabric_monitoring[0].dashboard_properties) > 0
     error_message = "Dashboard should have monitoring widgets configured"
   }
 }
@@ -116,7 +116,7 @@ run "validate_resource_tags" {
     condition = alltrue([
       for resource in [
         azurerm_log_analytics_workspace.fabric_logs,
-        azurerm_application_insights.fabric_insights,
+        azurerm_application_insights.fabric_insights[0],
         azurerm_monitor_action_group.fabric_alerts
       ] : contains(keys(resource.tags), "Environment")
     ])
@@ -127,7 +127,7 @@ run "validate_resource_tags" {
     condition = alltrue([
       for resource in [
         azurerm_log_analytics_workspace.fabric_logs,
-        azurerm_application_insights.fabric_insights,
+        azurerm_application_insights.fabric_insights[0],
         azurerm_monitor_action_group.fabric_alerts
       ] : contains(keys(resource.tags), "Purpose")
     ])

@@ -5,16 +5,14 @@
 # Copy this file to terraform.tfvars and update the values
 
 # Required variables
-solution_name        = "my-fabric-monitoring"
-subscription_id      = "12345678-1234-1234-1234-123456789012"
-fabric_capacity_name = "my-fabric-capacity"
+solution_name                  = "my-fabric-monitoring"
+subscription_id                = "12345678-1234-1234-1234-123456789012"
+fabric_capacity_name           = "my-fabric-capacity"
+fabric_capacity_resource_group = "rg-my-fabric-capacity"
 
 # Optional variables with defaults
 location    = "West US 2"
 environment = "dev"
-
-# Fabric workspace to monitor (optional)
-fabric_workspace_name = "my-fabric-workspace"
 
 # Alert configuration
 alert_email_addresses = [

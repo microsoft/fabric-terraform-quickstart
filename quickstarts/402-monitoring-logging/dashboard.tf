@@ -37,7 +37,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.fabric_capacity.monitored_capacity.id
+                            id = data.azurerm_fabric_capacity.monitored_capacity.id
                           }
                           name            = "CpuUtilization"
                           aggregationType = 4
@@ -101,7 +101,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.fabric_capacity.monitored_capacity.id
+                            id = data.azurerm_fabric_capacity.monitored_capacity.id
                           }
                           name            = "MemoryUtilization"
                           aggregationType = 4
@@ -165,7 +165,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.fabric_capacity.monitored_capacity.id
+                            id = data.azurerm_fabric_capacity.monitored_capacity.id
                           }
                           name            = "StorageUtilization"
                           aggregationType = 4
@@ -251,7 +251,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.fabric_capacity.monitored_capacity.id
+                            id = data.azurerm_fabric_capacity.monitored_capacity.id
                           }
                           name            = "ActiveConnections"
                           aggregationType = 4
