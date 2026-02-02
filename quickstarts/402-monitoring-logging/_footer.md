@@ -22,7 +22,7 @@ terraform test -filter tests/test_unit.tftest.hcl
 terraform test -filter tests/test_acc.tftest.hcl
 ```
 
-## Monitoring Access
+## Fabric Capacity Monitoring Access
 
 After deployment:
 

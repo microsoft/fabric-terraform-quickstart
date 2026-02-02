@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation
 # SPDX-License-Identifier: MPL-2.0
 
-# Example Terraform variables file for Fabric Monitoring and Logging
+# Example Terraform variables file for Fabric Capacity Monitoring and Logging
 # Copy this file to terraform.tfvars and update the values
 
 # Required variables
@@ -44,6 +44,6 @@ enable_application_insights = true
 tags = {
   Owner       = "Platform Team"
   CostCenter  = "IT-001"
-  Project     = "Fabric Monitoring"
+  Project     = "Fabric Capacity Monitoring and Logging"
   Environment = "Development"
 }

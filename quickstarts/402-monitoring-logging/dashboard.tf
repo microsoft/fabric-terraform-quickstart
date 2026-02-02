@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation
 # SPDX-License-Identifier: MPL-2.0
 
-# Azure Dashboard for Fabric Monitoring
+# Azure Dashboard for Fabric Capacity Monitoring
 resource "azurerm_dashboard" "fabric_monitoring" {
   count               = var.enable_dashboard ? 1 : 0
   name                = "dashboard-${var.solution_name}"

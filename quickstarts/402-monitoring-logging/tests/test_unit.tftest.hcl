@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation
 # SPDX-License-Identifier: MPL-2.0
 
-# Unit tests for Fabric Monitoring and Logging module
+# Unit tests for Fabric Capacity Monitoring and Logging module
 run "validate_log_analytics_workspace" {
   command = plan
 

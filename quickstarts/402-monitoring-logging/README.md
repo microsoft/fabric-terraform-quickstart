@@ -1,6 +1,6 @@
-# Fabric Monitoring and Logging (400 level)
+# Fabric Capacity Monitoring and Logging (400 level)
 
-Implements a comprehensive monitoring and logging solution for Microsoft Fabric resources. This example leverages Azure Monitor, Log Analytics, and Application Insights to provide real-time monitoring of Fabric Capacity and Workspace performance and health.
+Implements a comprehensive monitoring and logging solution focused on Microsoft Fabric Capacity. This example leverages Azure Monitor, Log Analytics, and Application Insights to provide real-time monitoring of Fabric Capacity performance and health.
 
 ## 🎯 Key Features
 
@@ -27,7 +27,7 @@ Implements a comprehensive monitoring and logging solution for Microsoft Fabric 
 
 ## 🏗️ Architecture
 
-```
+```text
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │  Fabric         │    │  Azure Monitor   │    │  Alert          │
 │  Capacity       │───▶│  & Log Analytics │───▶│  Notifications  │

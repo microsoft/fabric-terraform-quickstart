@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation
 # SPDX-License-Identifier: MPL-2.0
 
-# Acceptance tests for Fabric Monitoring and Logging module
+# Acceptance tests for Fabric Capacity Monitoring and Logging module
 variables {
   solution_name = "test-monitoring"
   location      = "West US 2"
