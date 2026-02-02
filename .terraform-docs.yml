@@ -28,9 +28,6 @@ content: |-
   {{ .Outputs }}
   {{ .Footer }}
 
-  ## Limitations and Considerations
-
-  - This example is provided as a sample only and is not intended for production use without further customization.
 output:
   file: README.md
   mode: replace
@@ -56,7 +53,7 @@ settings:
   hide-empty: false
   html: true
   indent: 2
-  lockfile: true
+  lockfile: false
   read-comments: true
   required: true
   sensitive: true

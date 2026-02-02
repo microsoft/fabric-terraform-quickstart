@@ -11,13 +11,13 @@ tasks:
   install:terraform:
     desc: Install Terraform
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "HashiCorp.Terraform"
-      - task: internal:install:brew:tap
+      - task: internal:_install:brew:tap
         vars:
           APP: "hashicorp/tap"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "hashicorp/tap/terraform"
       - cmd: |
@@ -30,10 +30,10 @@ tasks:
   install:opentofu:
     desc: Install OpenTofu
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "OpenTofu.Tofu"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "opentofu"
       - cmd: |
@@ -47,10 +47,10 @@ tasks:
   install:terraform-docs:
     desc: Install Terraform-Docs
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "Terraform-docs.Terraform-docs"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "terraform-docs"
       - cmd: |
@@ -75,10 +75,10 @@ tasks:
   install:tflint:
     desc: Install TFLint
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "TerraformLinters.TFLint"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "tflint"
       - cmd: |
@@ -108,7 +108,7 @@ tasks:
   # * Tools
   tools:
     desc: Install Terraform tools
-    cmds:
+    deps:
       - task: install:terraform
       - task: install:opentofu
       - task: install:terraform-docs

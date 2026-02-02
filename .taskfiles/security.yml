@@ -11,10 +11,10 @@ tasks:
   install:gitleaks:
     desc: Install Gitleaks
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "Gitleaks.Gitleaks"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: gitleaks
       - cmd: |
@@ -38,10 +38,10 @@ tasks:
   install:trivy:
     desc: Install Trivy
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "AquaSecurity.Trivy"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: trivy
       - cmd: |
@@ -56,14 +56,14 @@ tasks:
   install:checkov:
     desc: Install Checkov
     cmds:
-      - task: internal:install:pipx
+      - task: internal:_install:uv
         vars:
           APP: checkov
 
   # * Tools
   tools:
     desc: Install Security tools
-    cmds:
+    deps:
       - task: install:gitleaks
       - task: install:trivy
       - task: install:checkov

@@ -1,10 +1,11 @@
+<!-- BEGIN_TF_DOCS -->
 # Fabric Capacity Monitoring and Logging (400 level)
 
 Implements a comprehensive monitoring and logging solution focused on Microsoft Fabric Capacity. This example leverages Azure Monitor, Log Analytics, and Application Insights to provide real-time monitoring of Fabric Capacity performance and health.
 
-## 🎯 Key Features
+## Key Features
 
-### 📊 Monitoring Components
+### Monitoring Components
 
 - **Log Analytics Workspace**: Centralized log collection and analysis
 - **Application Insights**: Advanced application performance monitoring
@@ -12,20 +13,20 @@ Implements a comprehensive monitoring and logging solution focused on Microsoft 
 - **Metric Alerts**: CPU, memory, and storage utilization threshold alerts
 - **Diagnostic Settings**: Fabric resource log and metric collection
 
-### 🚨 Alerting System
+### Alerting System
 
 - **Email Notifications**: Automatic alerts to administrators and operations teams
 - **Webhook Integration**: Integration with Teams, Slack, and other collaboration tools
 - **Multi-level Severity**: Alert prioritization based on thresholds
 
-### 📈 Monitoring Metrics
+### Monitoring Metrics
 
 - **CPU Utilization**: Fabric Capacity CPU performance tracking
 - **Memory Utilization**: Memory resource monitoring
 - **Storage Utilization**: Data storage capacity management
 - **Active Connections**: Concurrent user and connection monitoring
 
-## 🏗️ Architecture
+## Architecture
 
 ```text
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
@@ -41,73 +42,90 @@ Implements a comprehensive monitoring and logging solution focused on Microsoft 
                        └──────────────────┘
 ```
 
-## 📋 Requirements
+---
 
-| Name | Version |
-|------|---------|
+## Requirements
+
+| Name      | Version       |
+|-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| azurerm | 4.43.0 |
-| fabric | 1.5.0 |
+| azurerm   | 4.58.0        |
+| fabric    | 1.7.0         |
 
-## 🔧 Providers
+## Providers
 
-| Name | Version |
-|------|---------|
-| azurerm | 4.43.0 |
-| fabric | 1.5.0 |
+| Name    | Version |
+|---------|---------|
+| azurerm | 4.58.0  |
+| fabric  | 1.7.0   |
 
-## 📦 Modules
+## Modules
 
 No modules.
 
-## 🏛️ Resources
+## Resources
 
-| Name | Type |
-|------|------|
-| azurerm_resource_group.monitoring | resource |
-| azurerm_log_analytics_workspace.fabric_logs | resource |
-| azurerm_application_insights.fabric_insights | resource |
-| azurerm_monitor_action_group.fabric_alerts | resource |
-| azurerm_monitor_diagnostic_setting.fabric_capacity_diagnostics | resource |
-| azurerm_monitor_metric_alert.fabric_capacity_cpu | resource |
-| azurerm_monitor_metric_alert.fabric_capacity_memory | resource |
-| azurerm_monitor_metric_alert.fabric_capacity_storage | resource |
-| azurerm_dashboard.fabric_monitoring | resource |
-| azurerm_fabric_capacity.monitored_capacity | data source |
-| fabric_capacity.monitored_capacity | data source |
+| Name                                                                                                                                                                         | Type        |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [azurerm_application_insights.fabric_insights](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/application_insights)                         | resource    |
+| [azurerm_log_analytics_workspace.fabric_logs](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/log_analytics_workspace)                       | resource    |
+| [azurerm_monitor_action_group.fabric_alerts](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/monitor_action_group)                           | resource    |
+| [azurerm_monitor_diagnostic_setting.fabric_capacity_diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/monitor_diagnostic_setting) | resource    |
+| [azurerm_monitor_metric_alert.fabric_capacity_cpu](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/monitor_metric_alert)                     | resource    |
+| [azurerm_monitor_metric_alert.fabric_capacity_memory](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/monitor_metric_alert)                  | resource    |
+| [azurerm_monitor_metric_alert.fabric_capacity_storage](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/monitor_metric_alert)                 | resource    |
+| [azurerm_portal_dashboard.fabric_monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/portal_dashboard)                               | resource    |
+| [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/resource_group)                                          | resource    |
+| [fabric_capacity.monitored_capacity](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/data-sources/capacity)                                              | data source |
 
-## 📥 Inputs
+## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| solution_name | Name of the solution for resource naming | `string` | n/a | yes |
-| subscription_id | Azure subscription ID | `string` | n/a | yes |
-| fabric_capacity_name | Name of the existing Fabric Capacity to monitor | `string` | n/a | yes |
-| fabric_capacity_resource_group | Resource group name where the Fabric Capacity is located | `string` | n/a | yes |
-| location | Azure region for resource deployment | `string` | `"West US 2"` | no |
-| environment | Environment name (dev, test, staging, prod) | `string` | `"dev"` | no |
-| alert_email_addresses | List of email addresses to receive monitoring alerts | `list(string)` | `[]` | no |
-| alert_webhook_urls | List of webhook URLs for alert notifications | `list(string)` | `[]` | no |
-| log_retention_days | Number of days to retain logs in Log Analytics workspace | `number` | `30` | no |
-| cpu_threshold | CPU utilization threshold percentage for alerts | `number` | `80` | no |
-| memory_threshold | Memory utilization threshold percentage for alerts | `number` | `85` | no |
-| storage_threshold | Storage utilization threshold percentage for alerts | `number` | `90` | no |
-| alert_frequency | How often to evaluate alert conditions (in minutes) | `number` | `5` | no |
-| enable_dashboard | Whether to create Azure Dashboard for monitoring | `bool` | `true` | no |
-| enable_application_insights | Whether to create Application Insights for advanced monitoring | `bool` | `true` | no |
-| tags | Additional tags to apply to all resources | `map(string)` | `{}` | no |
+| Name                              | Description                                                       | Type           | Default       | Required |
+|-----------------------------------|-------------------------------------------------------------------|----------------|---------------|:--------:|
+| fabric\_capacity\_name            | Name of the existing Fabric Capacity to monitor                   | `string`       | n/a           |   yes    |
+| fabric\_capacity\_resource\_group | Resource group name where the Fabric Capacity is located          | `string`       | n/a           |   yes    |
+| solution\_name                    | Name of the solution for resource naming                          | `string`       | n/a           |   yes    |
+| subscription\_id                  | Azure subscription ID                                             | `string`       | n/a           |   yes    |
+| alert\_email\_addresses           | List of email addresses to receive monitoring alerts              | `list(string)` | `[]`          |    no    |
+| alert\_frequency                  | How often to evaluate alert conditions (in minutes)               | `number`       | `5`           |    no    |
+| alert\_webhook\_urls              | List of webhook URLs for alert notifications (Teams, Slack, etc.) | `list(string)` | `[]`          |    no    |
+| cpu\_threshold                    | CPU utilization threshold percentage for alerts                   | `number`       | `80`          |    no    |
+| enable\_application\_insights     | Whether to create Application Insights for advanced monitoring    | `bool`         | `true`        |    no    |
+| enable\_dashboard                 | Whether to create Azure Dashboard for monitoring                  | `bool`         | `true`        |    no    |
+| environment                       | Environment name (dev, test, staging, prod)                       | `string`       | `"dev"`       |    no    |
+| location                          | Azure region for resource deployment                              | `string`       | `"West US 2"` |    no    |
+| log\_retention\_days              | Number of days to retain logs in Log Analytics workspace          | `number`       | `30`          |    no    |
+| memory\_threshold                 | Memory utilization threshold percentage for alerts                | `number`       | `85`          |    no    |
+| storage\_threshold                | Storage utilization threshold percentage for alerts               | `number`       | `90`          |    no    |
+| tags                              | Additional tags to apply to all resources                         | `map(string)`  | `{}`          |    no    |
 
-## 📤 Outputs
+## Outputs
 
-| Name | Description |
-|------|-------------|
-| log_analytics_workspace_id | ID of the Log Analytics workspace |
-| application_insights_instrumentation_key | Application Insights instrumentation key |
-| dashboard_url | URL to access the monitoring dashboard |
-| action_group_id | ID of the monitoring action group |
-| monitoring_summary | Summary of monitoring configuration |
+| Name                                        | Description                                            |
+|---------------------------------------------|--------------------------------------------------------|
+| action\_group\_id                           | ID of the monitoring action group                      |
+| action\_group\_name                         | Name of the monitoring action group                    |
+| application\_insights\_connection\_string   | Connection string for Application Insights             |
+| application\_insights\_id                   | ID of the Application Insights instance                |
+| application\_insights\_instrumentation\_key | Instrumentation key for Application Insights           |
+| cpu\_alert\_id                              | ID of the CPU utilization alert                        |
+| dashboard\_id                               | ID of the monitoring dashboard                         |
+| dashboard\_url                              | URL to access the monitoring dashboard                 |
+| diagnostic\_setting\_id                     | ID of the Fabric Capacity diagnostic setting           |
+| log\_analytics\_customer\_id                | Customer ID (Workspace ID) for Log Analytics workspace |
+| log\_analytics\_workspace\_id               | ID of the Log Analytics workspace                      |
+| log\_analytics\_workspace\_key              | Primary shared key for Log Analytics workspace         |
+| log\_analytics\_workspace\_name             | Name of the Log Analytics workspace                    |
+| memory\_alert\_id                           | ID of the memory utilization alert                     |
+| monitored\_fabric\_capacity\_arm\_id        | Azure ARM resource ID of the monitored Fabric Capacity |
+| monitored\_fabric\_capacity\_id             | Fabric GUID of the monitored Fabric Capacity           |
+| monitored\_fabric\_capacity\_name           | Name of the monitored Fabric Capacity                  |
+| monitoring\_summary                         | Summary of monitoring configuration                    |
+| resource\_group\_id                         | ID of the monitoring resource group                    |
+| resource\_group\_name                       | Name of the monitoring resource group                  |
+| storage\_alert\_id                          | ID of the storage utilization alert                    |
 
-## 🚀 Usage
+## Usage
 
 ### 1. Prepare Variables File
 
@@ -128,7 +146,7 @@ terraform apply
 
 After deployment, use the output `dashboard_url` to access the monitoring dashboard in Azure Portal.
 
-## 📊 Monitoring Configuration
+## Monitoring Configuration
 
 ### Alert Thresholds
 
@@ -142,7 +160,7 @@ After deployment, use the output `dashboard_url` to access the monitoring dashbo
 - **Maximum Retention**: 730 days
 - **Compliance**: Adjust according to your organization's data retention policies
 
-## 🔍 Log Query Examples
+## Log Query Examples
 
 ### Query Fabric Capacity CPU Utilization
 
@@ -163,7 +181,7 @@ AzureActivity
 | order by TimeGenerated desc
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Run Unit Tests
 
@@ -177,7 +195,7 @@ terraform test -filter tests/test_unit.tftest.hcl
 terraform test -filter tests/test_acc.tftest.hcl
 ```
 
-## 🔧 Customization
+## Customization
 
 ### Adding Additional Metric Alerts
 
@@ -214,7 +232,7 @@ alert_webhook_urls = [
 ]
 ```
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -230,25 +248,25 @@ alert_webhook_urls = [
    - Verify Azure Portal permissions
    - Check resource group access permissions
 
-## 💰 Cost Optimization
+## Cost Optimization
 
 - **Log Analytics**: Costs based on data ingestion volume
 - **Application Insights**: Usage-based pricing
 - **Alerts**: Small costs based on evaluation frequency
 - **Dashboard**: Free (Azure Portal built-in feature)
 
-## 🔐 Security Considerations
+## Security Considerations
 
 - Log Analytics keys are sensitive information - manage securely
 - Protect Application Insights connection strings
 - Minimize resource group access permissions
 - Secure webhook URLs for alert notifications
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Azure Monitor Documentation](https://docs.microsoft.com/azure/azure-monitor/)
-- [Log Analytics Query Language](https://docs.microsoft.com/azure/azure-monitor/log-query/)
-- [Microsoft Fabric Monitoring](https://docs.microsoft.com/fabric/admin/monitoring)
+- [Log Analytics Query Language](https://learn.microsoft.com/azure/azure-monitor/logs/log-query-overview)
+- [Microsoft Fabric Monitoring](https://learn.microsoft.com/fabric/admin/monitoring-workspace)
 - [Terraform Azure Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 
 ## Limitations and Considerations
@@ -256,3 +274,4 @@ alert_webhook_urls = [
 - This example is provided as a sample only and is not intended for production use without further customization.
 - Existing Fabric resources are required with appropriate permissions.
 - Consider monitoring costs when configuring log retention periods and alert frequencies.
+<!-- END_TF_DOCS -->

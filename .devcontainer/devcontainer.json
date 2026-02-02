@@ -14,9 +14,10 @@
       "version": "1.25"
     },
     "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.13",
+      "version": "3.14",
       "toolsToInstall": ""
     },
+    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
@@ -28,13 +29,13 @@
       "jaqVersion": "latest"
     },
     "ghcr.io/devcontainers/features/terraform:1": {
-      "version": "1.12.1",
+      "version": "1.14.4",
       "installSentinel": true,
       "installTFsec": false,
       "installTerraformDocs": true
     },
     "ghcr.io/robbert229/devcontainer-features/opentofu:1": {
-      "version": "1.9.1"
+      "version": "1.11.4"
     },
     "ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
   },

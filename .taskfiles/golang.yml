@@ -11,10 +11,10 @@ tasks:
   install:golangci-lint:
     desc: Install golangci-lint
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "GolangCI.golangci-lint"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: golangci-lint
       - cmd: |
@@ -25,14 +25,14 @@ tasks:
   install:govulncheck:
     desc: Install govulncheck
     cmds:
-      - task: internal:install:go
+      - task: internal:_install:go
         vars:
           APP: "golang.org/x/vuln/cmd/govulncheck@latest"
 
   # * Tools
   tools:
     desc: Install GoLang tools
-    cmds:
+    deps:
       - task: install:golangci-lint
       - task: install:govulncheck
 
@@ -47,18 +47,18 @@ tasks:
           {{else}}
             find . -mindepth 2 -not -path "*/vendor/*" -not -path "*/.terraform/*" -type f -name go.mod -exec dirname {} \;
           {{end}}
-    cmds:
+    deps:
       - for: { var: WORKDIRS }
-        task: run:golangci
+        task: _run:golangci
         vars:
           WORKDIR: "{{.ITEM}}"
       - for: { var: WORKDIRS }
-        task: run:govulncheck
+        task: _run:govulncheck
         vars:
           WORKDIR: "{{.ITEM}}"
     dir: "{{.ROOT_DIR}}"
 
-  run:golangci:
+  _run:golangci:
     desc: Run golangci-lint
     internal: true
     preconditions:
@@ -69,7 +69,7 @@ tasks:
       - golangci-lint run --fix
     dir: "{{.WORKDIR}}"
 
-  run:govulncheck:
+  _run:govulncheck:
     desc: govulncheck
     internal: true
     preconditions:

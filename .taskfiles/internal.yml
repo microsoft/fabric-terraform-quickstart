@@ -11,6 +11,7 @@ tasks:
   command:
     desc: Check if command exists
     silent: true
+    run: once
     preconditions:
       - sh: |
           {{empty .CLI_ARGS | not}}
@@ -22,7 +23,7 @@ tasks:
           {{.PWSH}} 'Get-Command "{{.CLI_ARGS}}"'
         platforms: [windows]
 
-  install:go:
+  _install:go:
     desc: go install
     internal: true
     preconditions:
@@ -31,7 +32,7 @@ tasks:
     cmds:
       - go install {{.APP}}
 
-  install:winget:
+  _install:winget:
     desc: winget install
     internal: true
     preconditions:
@@ -42,7 +43,7 @@ tasks:
     ignore_error: true
     platforms: [windows]
 
-  install:brew:
+  _install:brew:
     desc: brew install
     internal: true
     preconditions:
@@ -52,7 +53,7 @@ tasks:
       - brew install {{.APP}}
     platforms: [darwin]
 
-  install:brew:tap:
+  _install:brew:tap:
     desc: brew tap
     internal: true
     preconditions:
@@ -62,7 +63,7 @@ tasks:
       - brew tap {{.APP}}
     platforms: [darwin]
 
-  install:pipx:
+  _install:pipx:
     desc: pipx install
     internal: true
     preconditions:
@@ -71,7 +72,7 @@ tasks:
     cmds:
       - pipx install --include-deps {{.APP}}
 
-  install:npm:
+  _install:npm:
     desc: npm install
     internal: true
     preconditions:
@@ -80,11 +81,23 @@ tasks:
     cmds:
       - npm install --global {{.APP}}
 
-  install:uv:
+  _install:uv:
     desc: uv install
     internal: true
     preconditions:
       - sh: task internal:command -- uv
-        msg: "uv is not installed. Please install uv: https://docs.astral.sh/uv/getting-started/installation/"
+        msg: "uv is not installed. Please install uv by running: `task internal:setup:uv`"
     cmds:
-      - uv tool install --force {{.APP}}
+      - uv tool install --upgrade {{.APP}}
+
+  setup:uv:
+    desc: uv setup
+    cmds:
+      - cmd: curl -LsSf https://astral.sh/uv/install.sh | sh
+        platforms: [linux]
+      - task: _install:brew
+        vars:
+          APP: uv
+      - task: _install:winget
+        vars:
+          APP: sh.uv
