@@ -83,12 +83,12 @@ run "validate_dashboard" {
 
   # Test that Azure Dashboard is created (uses count, so access with [0])
   assert {
-    condition     = azurerm_dashboard.fabric_monitoring[0].name == "dashboard-${var.solution_name}"
+    condition     = azurerm_portal_dashboard.fabric_monitoring[0].name == "dashboard-${var.solution_name}"
     error_message = "Dashboard name should follow naming convention"
   }
 
   assert {
-    condition     = length(azurerm_dashboard.fabric_monitoring[0].dashboard_properties) > 0
+    condition     = length(azurerm_portal_dashboard.fabric_monitoring[0].dashboard_properties) > 0
     error_message = "Dashboard should have monitoring widgets configured"
   }
 }

@@ -91,7 +91,7 @@ run "verify_diagnostic_settings" {
   }
 
   assert {
-    condition     = length(azurerm_monitor_diagnostic_setting.fabric_capacity_diagnostics.metric) > 0
+    condition     = length(azurerm_monitor_diagnostic_setting.fabric_capacity_diagnostics.enabled_metric) > 0
     error_message = "Diagnostic settings should have metrics collection enabled"
   }
 }
@@ -102,13 +102,13 @@ run "verify_dashboard_deployment" {
 
   # Verify dashboard is created and accessible
   assert {
-    condition     = azurerm_dashboard.fabric_monitoring.id != null
+    condition     = azurerm_portal_dashboard.fabric_monitoring[0].id != null
     error_message = "Azure Dashboard should be successfully deployed"
   }
 
   # Verify dashboard has monitoring widgets
   assert {
-    condition     = length(jsondecode(azurerm_dashboard.fabric_monitoring.dashboard_properties).lenses) > 0
+    condition     = length(jsondecode(azurerm_portal_dashboard.fabric_monitoring[0].dashboard_properties).lenses) > 0
     error_message = "Dashboard should contain monitoring widgets"
   }
 }
@@ -124,7 +124,7 @@ run "verify_resource_tagging" {
         azurerm_log_analytics_workspace.fabric_logs,
         azurerm_application_insights.fabric_insights,
         azurerm_monitor_action_group.fabric_alerts,
-        azurerm_dashboard.fabric_monitoring
+        azurerm_portal_dashboard.fabric_monitoring[0]
       ] : resource.tags["Environment"] == var.environment
     ])
     error_message = "All resources should have correct Environment tag"
@@ -136,7 +136,7 @@ run "verify_resource_tagging" {
         azurerm_log_analytics_workspace.fabric_logs,
         azurerm_application_insights.fabric_insights,
         azurerm_monitor_action_group.fabric_alerts,
-        azurerm_dashboard.fabric_monitoring
+        azurerm_portal_dashboard.fabric_monitoring[0]
       ] : resource.tags["Purpose"] == "Fabric-Monitoring"
     ])
     error_message = "All resources should have correct Purpose tag"

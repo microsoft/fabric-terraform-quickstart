@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # Azure Dashboard for Fabric Capacity Monitoring
-resource "azurerm_dashboard" "fabric_monitoring" {
+resource "azurerm_portal_dashboard" "fabric_monitoring" {
   count               = var.enable_dashboard ? 1 : 0
   name                = "dashboard-${var.solution_name}"
   resource_group_name = azurerm_resource_group.monitoring.name
@@ -37,7 +37,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.azurerm_fabric_capacity.monitored_capacity.id
+                            id = local.fabric_capacity_arm_id
                           }
                           name            = "CpuUtilization"
                           aggregationType = 4
@@ -101,7 +101,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.azurerm_fabric_capacity.monitored_capacity.id
+                            id = local.fabric_capacity_arm_id
                           }
                           name            = "MemoryUtilization"
                           aggregationType = 4
@@ -165,7 +165,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.azurerm_fabric_capacity.monitored_capacity.id
+                            id = local.fabric_capacity_arm_id
                           }
                           name            = "StorageUtilization"
                           aggregationType = 4
@@ -251,7 +251,7 @@ resource "azurerm_dashboard" "fabric_monitoring" {
                       metrics = [
                         {
                           resourceMetadata = {
-                            id = data.azurerm_fabric_capacity.monitored_capacity.id
+                            id = local.fabric_capacity_arm_id
                           }
                           name            = "ActiveConnections"
                           aggregationType = 4

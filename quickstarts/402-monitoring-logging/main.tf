@@ -6,6 +6,8 @@ locals {
   # Resource naming convention
   resource_prefix = "fabric-monitoring-${var.solution_name}"
 
+  fabric_capacity_arm_id = "/subscriptions/${var.subscription_id}/resourceGroups/${var.fabric_capacity_resource_group}/providers/Microsoft.Fabric/capacities/${var.fabric_capacity_name}"
+
   # Common tags applied to all resources
   common_tags = merge(var.tags, {
     Environment = var.environment
@@ -14,13 +16,6 @@ locals {
     ManagedBy   = "Terraform"
     CreatedDate = formatdate("YYYY-MM-DD", timestamp())
   })
-}
-
-# Data source to get existing Azure Fabric Capacity (returns ARM resource ID)
-# This is required for Azure Monitor resources which need the ARM ID format
-data "azurerm_fabric_capacity" "monitored_capacity" {
-  name                = var.fabric_capacity_name
-  resource_group_name = var.fabric_capacity_resource_group
 }
 
 # Data source to get Fabric Capacity details (returns Fabric GUID)
@@ -89,7 +84,7 @@ resource "azurerm_monitor_action_group" "fabric_alerts" {
 # Diagnostic Settings for Fabric Capacity
 resource "azurerm_monitor_diagnostic_setting" "fabric_capacity_diagnostics" {
   name                       = "diag-fabric-capacity-${var.solution_name}"
-  target_resource_id         = data.azurerm_fabric_capacity.monitored_capacity.id
+  target_resource_id         = local.fabric_capacity_arm_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.fabric_logs.id
 
   # Enable all available log categories
@@ -106,14 +101,8 @@ resource "azurerm_monitor_diagnostic_setting" "fabric_capacity_diagnostics" {
   }
 
   # Enable all available metrics
-  metric {
+  enabled_metric {
     category = "AllMetrics"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-      days    = var.log_retention_days
-    }
   }
 }
 
@@ -121,7 +110,7 @@ resource "azurerm_monitor_diagnostic_setting" "fabric_capacity_diagnostics" {
 resource "azurerm_monitor_metric_alert" "fabric_capacity_cpu" {
   name                = "alert-fabric-capacity-cpu-${var.solution_name}"
   resource_group_name = azurerm_resource_group.monitoring.name
-  scopes              = [data.azurerm_fabric_capacity.monitored_capacity.id]
+  scopes              = [local.fabric_capacity_arm_id]
   description         = "Alert when Fabric Capacity CPU utilization exceeds ${var.cpu_threshold}%"
   severity            = 2
   frequency           = "PT${var.alert_frequency}M"
@@ -147,7 +136,7 @@ resource "azurerm_monitor_metric_alert" "fabric_capacity_cpu" {
 resource "azurerm_monitor_metric_alert" "fabric_capacity_memory" {
   name                = "alert-fabric-capacity-memory-${var.solution_name}"
   resource_group_name = azurerm_resource_group.monitoring.name
-  scopes              = [data.azurerm_fabric_capacity.monitored_capacity.id]
+  scopes              = [local.fabric_capacity_arm_id]
   description         = "Alert when Fabric Capacity memory utilization exceeds ${var.memory_threshold}%"
   severity            = 2
   frequency           = "PT${var.alert_frequency}M"
@@ -173,7 +162,7 @@ resource "azurerm_monitor_metric_alert" "fabric_capacity_memory" {
 resource "azurerm_monitor_metric_alert" "fabric_capacity_storage" {
   name                = "alert-fabric-capacity-storage-${var.solution_name}"
   resource_group_name = azurerm_resource_group.monitoring.name
-  scopes              = [data.azurerm_fabric_capacity.monitored_capacity.id]
+  scopes              = [local.fabric_capacity_arm_id]
   description         = "Alert when Fabric Capacity storage utilization exceeds ${var.storage_threshold}%"
   severity            = 1
   frequency           = "PT${var.alert_frequency}M"

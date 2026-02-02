@@ -82,12 +82,12 @@ output "storage_alert_id" {
 # Dashboard outputs
 output "dashboard_id" {
   description = "ID of the monitoring dashboard"
-  value       = var.enable_dashboard ? azurerm_dashboard.fabric_monitoring[0].id : null
+  value       = var.enable_dashboard ? azurerm_portal_dashboard.fabric_monitoring[0].id : null
 }
 
 output "dashboard_url" {
   description = "URL to access the monitoring dashboard"
-  value       = var.enable_dashboard ? "https://portal.azure.com/#@/dashboard/arm${azurerm_dashboard.fabric_monitoring[0].id}" : null
+  value       = var.enable_dashboard ? "https://portal.azure.com/#@/dashboard/arm${azurerm_portal_dashboard.fabric_monitoring[0].id}" : null
 }
 
 # Diagnostic Settings outputs
@@ -104,7 +104,7 @@ output "monitored_fabric_capacity_id" {
 
 output "monitored_fabric_capacity_arm_id" {
   description = "Azure ARM resource ID of the monitored Fabric Capacity"
-  value       = data.azurerm_fabric_capacity.monitored_capacity.id
+  value       = local.fabric_capacity_arm_id
 }
 
 output "monitored_fabric_capacity_name" {
