@@ -8,13 +8,13 @@
 | Name      | Version        |
 |-----------|----------------|
 | terraform | >= 1.11, < 2.0 |
-| random    | 3.8.0          |
+| random    | 3.8.1          |
 
 ## Providers
 
 | Name   | Version |
 |--------|---------|
-| random | 3.8.0   |
+| random | 3.8.1   |
 
 ## Modules
 
@@ -24,9 +24,9 @@ No modules.
 
 | Name                                                                                                           | Type     |
 |----------------------------------------------------------------------------------------------------------------|----------|
-| [random_password.this](https://registry.terraform.io/providers/hashicorp/random/3.8.0/docs/resources/password) | resource |
-| [random_string.this](https://registry.terraform.io/providers/hashicorp/random/3.8.0/docs/resources/string)     | resource |
-| [random_uuid.this](https://registry.terraform.io/providers/hashicorp/random/3.8.0/docs/resources/uuid)         | resource |
+| [random_password.this](https://registry.terraform.io/providers/hashicorp/random/3.8.1/docs/resources/password) | resource |
+| [random_string.this](https://registry.terraform.io/providers/hashicorp/random/3.8.1/docs/resources/string)     | resource |
+| [random_uuid.this](https://registry.terraform.io/providers/hashicorp/random/3.8.1/docs/resources/uuid)         | resource |
 
 ## Inputs
 

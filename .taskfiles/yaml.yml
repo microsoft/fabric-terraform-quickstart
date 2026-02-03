@@ -11,14 +11,14 @@ tasks:
   install:yamllint:
     desc: Install YAMLlint
     cmds:
-      - task: internal:install:pipx
+      - task: internal:_install:uv
         vars:
           APP: yamllint
 
   # * Tools
   tools:
     desc: Install YAML tools
-    cmds:
+    deps:
       - task: install:yamllint
 
   # * Lint

@@ -11,7 +11,7 @@ tasks:
   install:cspell:
     desc: Install CSpell
     cmds:
-      - task: internal:install:npm
+      - task: internal:_install:npm
         vars:
           APP: cspell
 
@@ -19,7 +19,7 @@ tasks:
   install:codespell:
     desc: Install CodeSpell
     cmds:
-      - task: internal:install:pipx
+      - task: internal:_install:uv
         vars:
           APP: codespell
 
@@ -27,10 +27,10 @@ tasks:
   install:lychee:
     desc: Install Lychee
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "lycheeverse.lychee"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: lychee
       - cmd: |
@@ -45,7 +45,7 @@ tasks:
   # * Tools
   tools:
     desc: Install Spell tools
-    cmds:
+    deps:
       - task: install:cspell
       - task: install:codespell
       - task: install:lychee
@@ -54,12 +54,7 @@ tasks:
   lint:
     desc: Lint Spell files
     cmds:
-      - cmd: |
-          $(pipx environment --value PIPX_BIN_DIR)/codespell --summary --write-changes
-        platforms: [linux, darwin]
-      - cmd: |
-          codespell --summary --write-changes
-        platforms: [windows]
+      - codespell --summary --write-changes
       - cspell --config ./.cspell.yml "./**/*.md"
       - lychee --config ./.lychee.toml --format markdown .
     dir: "{{.ROOT_DIR}}"

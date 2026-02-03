@@ -27,4 +27,6 @@ words:
   - govulncheck
   - stefanzweifel
   - ghsa
+  - kusto
+  - tfvars
 allowCompoundWords: true

@@ -8,6 +8,9 @@ locals {
 
   fabric_capacity_arm_id = "/subscriptions/${var.subscription_id}/resourceGroups/${var.fabric_capacity_resource_group}/providers/Microsoft.Fabric/capacities/${var.fabric_capacity_name}"
 
+  # Metric alert window size must match allowed values
+  alert_window_size = var.alert_frequency == 60 ? "PT1H" : var.alert_frequency == 10 ? "PT15M" : "PT${var.alert_frequency}M"
+
   # Common tags applied to all resources
   common_tags = merge(var.tags, {
     Environment = var.environment
@@ -114,7 +117,7 @@ resource "azurerm_monitor_metric_alert" "fabric_capacity_cpu" {
   description         = "Alert when Fabric Capacity CPU utilization exceeds ${var.cpu_threshold}%"
   severity            = 2
   frequency           = "PT${var.alert_frequency}M"
-  window_size         = "PT${var.alert_frequency * 2}M"
+  window_size         = local.alert_window_size
   enabled             = true
 
   criteria {
@@ -140,7 +143,7 @@ resource "azurerm_monitor_metric_alert" "fabric_capacity_memory" {
   description         = "Alert when Fabric Capacity memory utilization exceeds ${var.memory_threshold}%"
   severity            = 2
   frequency           = "PT${var.alert_frequency}M"
-  window_size         = "PT${var.alert_frequency * 2}M"
+  window_size         = local.alert_window_size
   enabled             = true
 
   criteria {
@@ -166,7 +169,7 @@ resource "azurerm_monitor_metric_alert" "fabric_capacity_storage" {
   description         = "Alert when Fabric Capacity storage utilization exceeds ${var.storage_threshold}%"
   severity            = 1
   frequency           = "PT${var.alert_frequency}M"
-  window_size         = "PT${var.alert_frequency * 2}M"
+  window_size         = local.alert_window_size
   enabled             = true
 
   criteria {

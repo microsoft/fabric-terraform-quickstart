@@ -34,6 +34,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
 
       - name: 🚧 Setup Node
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
@@ -53,9 +54,10 @@ jobs:
           cache: false
 
       - name: 🚧 Setup Task
-        uses: arduino/setup-task@b91d5d2c96a56797b48ac1e0e89220bf64044611 # v2.0.0
-        with:
-          repo-token: ${{ github.token }}
+        uses: go-task/setup-task@0ab1b2a65bc55236a3bc64cde78f80e20e8885c2 # v1.0.0
+
+      - name: 🚧 Setup UV
+        run: task internal:setup:uv
 
       - name: 🔨 Setup tools
         run: task tools

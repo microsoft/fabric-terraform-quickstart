@@ -11,13 +11,13 @@ tasks:
   install:terraform:
     desc: Install Terraform
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "HashiCorp.Terraform"
-      - task: internal:install:brew:tap
+      - task: internal:_install:brew:tap
         vars:
           APP: "hashicorp/tap"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "hashicorp/tap/terraform"
       - cmd: |
@@ -30,27 +30,24 @@ tasks:
   install:opentofu:
     desc: Install OpenTofu
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "OpenTofu.Tofu"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "opentofu"
       - cmd: |
-          curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
-          chmod +x install-opentofu.sh
-          ./install-opentofu.sh --install-method deb
-          rm -f install-opentofu.sh
+          curl -fsSL https://get.opentofu.org/install-opentofu.sh | sh -s -- --install-method standalone
         platforms: [linux]
 
   # * Install Terraform-Docs
   install:terraform-docs:
     desc: Install Terraform-Docs
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "Terraform-docs.Terraform-docs"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "terraform-docs"
       - cmd: |
@@ -75,10 +72,10 @@ tasks:
   install:tflint:
     desc: Install TFLint
     cmds:
-      - task: internal:install:winget
+      - task: internal:_install:winget
         vars:
           APP: "TerraformLinters.TFLint"
-      - task: internal:install:brew
+      - task: internal:_install:brew
         vars:
           APP: "tflint"
       - cmd: |
@@ -108,7 +105,7 @@ tasks:
   # * Tools
   tools:
     desc: Install Terraform tools
-    cmds:
+    deps:
       - task: install:terraform
       - task: install:opentofu
       - task: install:terraform-docs
@@ -189,7 +186,7 @@ tasks:
     cmds:
       - terraform init -upgrade -backend=false
       - for: sources
-        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testunit-results.xml
+        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml="testunit-results.xml"
     dir: "{{.USER_WORKING_DIR}}"
 
   test:acc:all:
