@@ -2,8 +2,43 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # Unit tests for Fabric Capacity Monitoring and Logging module
+mock_provider "azurerm" {
+  alias  = "fake"
+  source = "../../tests/mocks/azurerm"
+
+  mock_resource "azurerm_log_analytics_workspace" {
+    defaults = {
+      id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.OperationalInsights/workspaces/law-test"
+    }
+  }
+
+  mock_resource "azurerm_monitor_action_group" {
+    defaults = {
+      id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Insights/actionGroups/ag-test"
+    }
+  }
+}
+
+mock_provider "fabric" {
+  alias  = "fake"
+  source = "../../tests/mocks/fabric"
+}
+
 run "validate_log_analytics_workspace" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test that Log Analytics workspace is created with correct configuration
   assert {
@@ -23,7 +58,20 @@ run "validate_log_analytics_workspace" {
 }
 
 run "validate_application_insights" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test Application Insights configuration (uses count, so access with [0])
   assert {
@@ -43,7 +91,20 @@ run "validate_application_insights" {
 }
 
 run "validate_action_group" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test that action group is created for alerts
   assert {
@@ -58,7 +119,20 @@ run "validate_action_group" {
 }
 
 run "validate_metric_alerts" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test Fabric Capacity CPU alert
   assert {
@@ -79,7 +153,20 @@ run "validate_metric_alerts" {
 }
 
 run "validate_dashboard" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test that Azure Dashboard is created (uses count, so access with [0])
   assert {
@@ -94,7 +181,20 @@ run "validate_dashboard" {
 }
 
 run "validate_diagnostic_settings" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test diagnostic settings for Fabric Capacity
   assert {
@@ -109,7 +209,20 @@ run "validate_diagnostic_settings" {
 }
 
 run "validate_resource_tags" {
-  command = plan
+  providers = {
+    azurerm = azurerm.fake
+    fabric  = fabric.fake
+  }
+
+  variables {
+    solution_name                  = "test"
+    subscription_id                = "00000000-0000-0000-0000-000000000000"
+    fabric_capacity_name           = "fctest"
+    fabric_capacity_resource_group = "rg-test"
+    alert_email_addresses          = ["alert@example.com"]
+  }
+
+  command = apply
 
   # Test that all resources have required tags
   assert {

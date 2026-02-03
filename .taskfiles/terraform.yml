@@ -186,7 +186,7 @@ tasks:
     cmds:
       - terraform init -upgrade -backend=false
       - for: sources
-        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml=testunit-results.xml
+        cmd: terraform test -filter "{{osClean .ITEM}}" -junit-xml="testunit-results.xml"
     dir: "{{.USER_WORKING_DIR}}"
 
   test:acc:all:
