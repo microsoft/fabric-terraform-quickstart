@@ -54,12 +54,7 @@ tasks:
   lint:
     desc: Lint Spell files
     cmds:
-      - cmd: |
-          $(pipx environment --value PIPX_BIN_DIR)/codespell --summary --write-changes
-        platforms: [linux, darwin]
-      - cmd: |
-          codespell --summary --write-changes
-        platforms: [windows]
+      - codespell --summary --write-changes
       - cspell --config ./.cspell.yml "./**/*.md"
       - lychee --config ./.lychee.toml --format markdown .
     dir: "{{.ROOT_DIR}}"
