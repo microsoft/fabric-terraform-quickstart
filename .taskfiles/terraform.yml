@@ -37,10 +37,7 @@ tasks:
         vars:
           APP: "opentofu"
       - cmd: |
-          curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
-          chmod +x install-opentofu.sh
-          ./install-opentofu.sh --install-method deb
-          rm -f install-opentofu.sh
+          curl -fsSL https://get.opentofu.org/install-opentofu.sh | sh -s -- --install-method standalone
         platforms: [linux]
 
   # * Install Terraform-Docs
