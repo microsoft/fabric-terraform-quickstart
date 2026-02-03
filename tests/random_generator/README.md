@@ -59,4 +59,8 @@ run "testacc_example" {
   }
 }
 ```
+
+## Limitations and Considerations
+
+- This example is provided as a sample only and is not intended for production use without further customization.
 <!-- END_TF_DOCS -->
