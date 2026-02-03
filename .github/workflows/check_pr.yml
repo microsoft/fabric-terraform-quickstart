@@ -56,6 +56,9 @@ jobs:
       - name: 🚧 Setup Task
         uses: go-task/setup-task@0ab1b2a65bc55236a3bc64cde78f80e20e8885c2 # v1.0.0
 
+      - name: 🚧 Setup UV
+        run: task internal:setup:uv
+
       - name: 🔨 Setup tools
         run: task tools
 
