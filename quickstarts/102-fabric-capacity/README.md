@@ -9,7 +9,7 @@
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
 | azuread   | 3.7.0         |
-| azurerm   | 4.58.0        |
+| azurerm   | 4.59.0        |
 | fabric    | 1.7.0         |
 
 ## Providers
@@ -17,7 +17,7 @@
 | Name    | Version |
 |---------|---------|
 | azuread | 3.7.0   |
-| azurerm | 4.58.0  |
+| azurerm | 4.59.0  |
 | fabric  | 1.7.0   |
 
 ## Modules
@@ -28,12 +28,12 @@ No modules.
 
 | Name                                                                                                                                   | Type        |
 |----------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [azurerm_fabric_capacity.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/fabric_capacity)     | resource    |
-| [azurerm_resource_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/resources/resource_group)       | resource    |
+| [azurerm_fabric_capacity.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.59.0/docs/resources/fabric_capacity)     | resource    |
+| [azurerm_resource_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.59.0/docs/resources/resource_group)       | resource    |
 | [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/resources/workspace)                    | resource    |
 | [azuread_directory_object.example](https://registry.terraform.io/providers/hashicorp/azuread/3.7.0/docs/data-sources/directory_object) | data source |
 | [azuread_user.example](https://registry.terraform.io/providers/hashicorp/azuread/3.7.0/docs/data-sources/user)                         | data source |
-| [azurerm_client_config.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.58.0/docs/data-sources/client_config)      | data source |
+| [azurerm_client_config.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.59.0/docs/data-sources/client_config)      | data source |
 | [fabric_capacity.example](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/data-sources/capacity)                   | data source |
 
 ## Inputs
