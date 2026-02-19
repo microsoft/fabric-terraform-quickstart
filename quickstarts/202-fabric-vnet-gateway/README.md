@@ -8,7 +8,7 @@
 | Name      | Version       |
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| azuread   | 3.7.0         |
+| azuread   | 3.8.0         |
 | azurerm   | 4.60.0        |
 | fabric    | 1.7.0         |
 
@@ -16,7 +16,7 @@
 
 | Name    | Version |
 |---------|---------|
-| azuread | 3.7.0   |
+| azuread | 3.8.0   |
 | azurerm | 4.60.0  |
 | fabric  | 1.7.0   |
 
@@ -37,8 +37,8 @@ No modules.
 | [fabric_gateway.example](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/resources/gateway)                                                                        | resource    |
 | [fabric_gateway_role_assignment.example_admin](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/resources/gateway_role_assignment)                                  | resource    |
 | [fabric_gateway_role_assignment.example_connection_creator](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/resources/gateway_role_assignment)                     | resource    |
-| [azuread_group.example_admin](https://registry.terraform.io/providers/hashicorp/azuread/3.7.0/docs/data-sources/group)                                                                 | data source |
-| [azuread_group.example_connection_creator](https://registry.terraform.io/providers/hashicorp/azuread/3.7.0/docs/data-sources/group)                                                    | data source |
+| [azuread_group.example_admin](https://registry.terraform.io/providers/hashicorp/azuread/3.8.0/docs/data-sources/group)                                                                 | data source |
+| [azuread_group.example_connection_creator](https://registry.terraform.io/providers/hashicorp/azuread/3.8.0/docs/data-sources/group)                                                    | data source |
 | [azurerm_client_config.example](https://registry.terraform.io/providers/hashicorp/azurerm/4.60.0/docs/data-sources/client_config)                                                      | data source |
 | [fabric_capacity.example](https://registry.terraform.io/providers/microsoft/fabric/1.7.0/docs/data-sources/capacity)                                                                   | data source |
 
