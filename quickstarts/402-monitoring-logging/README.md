@@ -49,15 +49,15 @@ Implements a comprehensive monitoring and logging solution focused on Microsoft 
 | Name      | Version       |
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| azurerm   | 4.67.0        |
-| fabric    | 1.9.0         |
+| azurerm   | 4.68.0        |
+| fabric    | 1.9.1         |
 
 ## Providers
 
 | Name    | Version |
 |---------|---------|
-| azurerm | 4.67.0  |
-| fabric  | 1.9.0   |
+| azurerm | 4.68.0  |
+| fabric  | 1.9.1   |
 
 ## Modules
 
@@ -67,16 +67,16 @@ No modules.
 
 | Name                                                                                                                                                                         | Type        |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [azurerm_application_insights.fabric_insights](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/application_insights)                         | resource    |
-| [azurerm_log_analytics_workspace.fabric_logs](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/log_analytics_workspace)                       | resource    |
-| [azurerm_monitor_action_group.fabric_alerts](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/monitor_action_group)                           | resource    |
-| [azurerm_monitor_diagnostic_setting.fabric_capacity_diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/monitor_diagnostic_setting) | resource    |
-| [azurerm_monitor_metric_alert.fabric_capacity_cpu](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/monitor_metric_alert)                     | resource    |
-| [azurerm_monitor_metric_alert.fabric_capacity_memory](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/monitor_metric_alert)                  | resource    |
-| [azurerm_monitor_metric_alert.fabric_capacity_storage](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/monitor_metric_alert)                 | resource    |
-| [azurerm_portal_dashboard.fabric_monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/portal_dashboard)                               | resource    |
-| [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/4.67.0/docs/resources/resource_group)                                          | resource    |
-| [fabric_capacity.monitored_capacity](https://registry.terraform.io/providers/microsoft/fabric/1.9.0/docs/data-sources/capacity)                                              | data source |
+| [azurerm_application_insights.fabric_insights](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/application_insights)                         | resource    |
+| [azurerm_log_analytics_workspace.fabric_logs](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/log_analytics_workspace)                       | resource    |
+| [azurerm_monitor_action_group.fabric_alerts](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/monitor_action_group)                           | resource    |
+| [azurerm_monitor_diagnostic_setting.fabric_capacity_diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/monitor_diagnostic_setting) | resource    |
+| [azurerm_monitor_metric_alert.fabric_capacity_cpu](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/monitor_metric_alert)                     | resource    |
+| [azurerm_monitor_metric_alert.fabric_capacity_memory](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/monitor_metric_alert)                  | resource    |
+| [azurerm_monitor_metric_alert.fabric_capacity_storage](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/monitor_metric_alert)                 | resource    |
+| [azurerm_portal_dashboard.fabric_monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/portal_dashboard)                               | resource    |
+| [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/4.68.0/docs/resources/resource_group)                                          | resource    |
+| [fabric_capacity.monitored_capacity](https://registry.terraform.io/providers/microsoft/fabric/1.9.1/docs/data-sources/capacity)                                              | data source |
 
 ## Inputs
 
