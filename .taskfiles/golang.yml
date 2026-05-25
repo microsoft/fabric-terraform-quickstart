@@ -3,9 +3,6 @@
 ---
 version: "3"
 
-vars:
-  GOLANGCI_LINT_VERSION: v2.1.6
-
 includes:
   internal: internal.yml
 
@@ -21,7 +18,7 @@ tasks:
         vars:
           APP: golangci-lint
       - cmd: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" {{.GOLANGCI_LINT_VERSION}}
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" latest
         platforms: [linux]
 
   # * Install govulncheck
