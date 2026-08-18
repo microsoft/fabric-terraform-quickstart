@@ -7,11 +7,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.76.0"
+      version = "4.81.0"
     }
     fabric = {
       source  = "microsoft/fabric"
-      version = "1.11.0"
+      version = "1.12.0"
     }
   }
 }
