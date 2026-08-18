@@ -35,11 +35,12 @@ tasks:
           APP: lychee
       - cmd: |
           arch=$(uname -m)
-          download_url=$(curl --location --silent "https://api.github.com/repos/lycheeverse/lychee/releases/latest" | grep 'browser_download_url.*lychee-'"${arch}"'.*gnu.*tar.gz' | grep -o 'https://[^"]*')
-          curl --location -o /tmp/lychee.tar.gz "${download_url}"
-          tar -xf /tmp/lychee.tar.gz --directory /tmp
-          rm /tmp/lychee.tar.gz
-          sudo mv /tmp/lychee /usr/local/bin/lychee
+          download_url=$(curl --location --silent "https://api.github.com/repos/lycheeverse/lychee/releases/latest" | grep 'browser_download_url.*lychee-'"${arch}"'.*gnu.*tar.gz"' | grep -o 'https://[^"]*')
+          temp_dir=$(mktemp -d)
+          curl --location -o "${temp_dir}/lychee.tar.gz" "${download_url}"
+          tar -xf "${temp_dir}/lychee.tar.gz" --directory "${temp_dir}"
+          sudo install "${temp_dir}/$(basename "${download_url}" .tar.gz)/lychee" /usr/local/bin/lychee
+          rm -rf "${temp_dir}"
         platforms: [linux]
 
   # * Tools
