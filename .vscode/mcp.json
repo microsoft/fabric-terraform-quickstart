@@ -7,8 +7,12 @@
         "run",
         "-i",
         "--rm",
-        "hashicorp/terraform-mcp-server"
+        "hashicorp/terraform-mcp-server:1.2.0"
       ]
+    },
+    "opentofu": {
+      "type": "sse",
+      "url": "https://mcp.opentofu.org/mcp"
     }
   }
 }

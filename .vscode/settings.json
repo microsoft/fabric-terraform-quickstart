@@ -37,9 +37,7 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true
   },
-  "markdownlint.config": {
-    "extends": "./.markdownlint.yml"
-  },
+  "markdownlint.configFile": "./.markdownlint.yml",
   "markdowntable.paddedDelimiterRowPipes": false,
   // go
   "go.useLanguageServer": true,
