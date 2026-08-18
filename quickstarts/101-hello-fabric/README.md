@@ -8,13 +8,13 @@
 | Name      | Version       |
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| fabric    | 1.9.1         |
+| fabric    | 1.12.1        |
 
 ## Providers
 
 | Name   | Version |
 |--------|---------|
-| fabric | 1.9.1   |
+| fabric | 1.12.1  |
 
 ## Modules
 
@@ -22,9 +22,9 @@ No modules.
 
 ## Resources
 
-| Name                                                                                                                | Type     |
-|---------------------------------------------------------------------------------------------------------------------|----------|
-| [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.9.1/docs/resources/workspace) | resource |
+| Name                                                                                                                 | Type     |
+|----------------------------------------------------------------------------------------------------------------------|----------|
+| [fabric_workspace.example](https://registry.terraform.io/providers/microsoft/fabric/1.12.1/docs/resources/workspace) | resource |
 
 ## Inputs
 
