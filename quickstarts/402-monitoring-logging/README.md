@@ -50,14 +50,14 @@ Implements a comprehensive monitoring and logging solution focused on Microsoft 
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
 | azurerm   | 5.1.0         |
-| fabric    | 1.12.1        |
+| fabric    | 1.13.0        |
 
 ## Providers
 
 | Name    | Version |
 |---------|---------|
 | azurerm | 5.1.0   |
-| fabric  | 1.12.1  |
+| fabric  | 1.13.0  |
 
 ## Modules
 
@@ -76,7 +76,7 @@ No modules.
 | [azurerm_monitor_metric_alert.fabric_capacity_storage](https://registry.terraform.io/providers/hashicorp/azurerm/5.1.0/docs/resources/monitor_metric_alert)                 | resource    |
 | [azurerm_portal_dashboard.fabric_monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/5.1.0/docs/resources/portal_dashboard)                               | resource    |
 | [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/5.1.0/docs/resources/resource_group)                                          | resource    |
-| [fabric_capacity.monitored_capacity](https://registry.terraform.io/providers/microsoft/fabric/1.12.1/docs/data-sources/capacity)                                            | data source |
+| [fabric_capacity.monitored_capacity](https://registry.terraform.io/providers/microsoft/fabric/1.13.0/docs/data-sources/capacity)                                            | data source |
 
 ## Inputs
 
