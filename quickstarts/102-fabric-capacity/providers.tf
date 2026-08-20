@@ -14,7 +14,7 @@ terraform {
     # https://registry.terraform.io/providers/microsoft/fabric/latest
     fabric = {
       source  = "microsoft/fabric"
-      version = "1.12.1"
+      version = "1.13.0"
     }
   }
 }
