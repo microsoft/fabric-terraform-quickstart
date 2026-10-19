@@ -8,17 +8,17 @@
 | Name      | Version       |
 |-----------|---------------|
 | terraform | >= 1.8, < 2.0 |
-| azuread   | 3.9.0         |
-| azurerm   | 5.3.0         |
-| fabric    | 1.13.0        |
+| azuread   | 3.10.0        |
+| azurerm   | 5.9.0         |
+| fabric    | 1.14.0        |
 
 ## Providers
 
 | Name    | Version |
 |---------|---------|
-| azuread | 3.9.0   |
-| azurerm | 5.3.0   |
-| fabric  | 1.13.0  |
+| azuread | 3.10.0  |
+| azurerm | 5.9.0   |
+| fabric  | 1.14.0  |
 
 ## Modules
 
@@ -28,19 +28,19 @@ No modules.
 
 | Name                                                                                                                                                                                  | Type        |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [azurerm_network_security_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/resources/network_security_group)                                       | resource    |
-| [azurerm_resource_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/resources/resource_group)                                                       | resource    |
-| [azurerm_role_assignment.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/resources/role_assignment)                                                     | resource    |
-| [azurerm_subnet.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/resources/subnet)                                                                       | resource    |
-| [azurerm_subnet_network_security_group_association.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/resources/subnet_network_security_group_association) | resource    |
-| [azurerm_virtual_network.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/resources/virtual_network)                                                     | resource    |
-| [fabric_gateway.example](https://registry.terraform.io/providers/microsoft/fabric/1.13.0/docs/resources/gateway)                                                                      | resource    |
-| [fabric_gateway_role_assignment.example_admin](https://registry.terraform.io/providers/microsoft/fabric/1.13.0/docs/resources/gateway_role_assignment)                                | resource    |
-| [fabric_gateway_role_assignment.example_connection_creator](https://registry.terraform.io/providers/microsoft/fabric/1.13.0/docs/resources/gateway_role_assignment)                   | resource    |
-| [azuread_group.example_admin](https://registry.terraform.io/providers/hashicorp/azuread/3.9.0/docs/data-sources/group)                                                                | data source |
-| [azuread_group.example_connection_creator](https://registry.terraform.io/providers/hashicorp/azuread/3.9.0/docs/data-sources/group)                                                   | data source |
-| [azurerm_client_config.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.3.0/docs/data-sources/client_config)                                                      | data source |
-| [fabric_capacity.example](https://registry.terraform.io/providers/microsoft/fabric/1.13.0/docs/data-sources/capacity)                                                                 | data source |
+| [azurerm_network_security_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/resources/network_security_group)                                       | resource    |
+| [azurerm_resource_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/resources/resource_group)                                                       | resource    |
+| [azurerm_role_assignment.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/resources/role_assignment)                                                     | resource    |
+| [azurerm_subnet.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/resources/subnet)                                                                       | resource    |
+| [azurerm_subnet_network_security_group_association.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/resources/subnet_network_security_group_association) | resource    |
+| [azurerm_virtual_network.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/resources/virtual_network)                                                     | resource    |
+| [fabric_gateway.example](https://registry.terraform.io/providers/microsoft/fabric/1.14.0/docs/resources/gateway)                                                                      | resource    |
+| [fabric_gateway_role_assignment.example_admin](https://registry.terraform.io/providers/microsoft/fabric/1.14.0/docs/resources/gateway_role_assignment)                                | resource    |
+| [fabric_gateway_role_assignment.example_connection_creator](https://registry.terraform.io/providers/microsoft/fabric/1.14.0/docs/resources/gateway_role_assignment)                   | resource    |
+| [azuread_group.example_admin](https://registry.terraform.io/providers/hashicorp/azuread/3.10.0/docs/data-sources/group)                                                               | data source |
+| [azuread_group.example_connection_creator](https://registry.terraform.io/providers/hashicorp/azuread/3.10.0/docs/data-sources/group)                                                  | data source |
+| [azurerm_client_config.example](https://registry.terraform.io/providers/hashicorp/azurerm/5.9.0/docs/data-sources/client_config)                                                      | data source |
+| [fabric_capacity.example](https://registry.terraform.io/providers/microsoft/fabric/1.14.0/docs/data-sources/capacity)                                                                 | data source |
 
 ## Inputs
 
