@@ -79,7 +79,7 @@ tasks:
         vars:
           APP: "tflint"
       - cmd: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          go install github.com/terraform-linters/tflint@latest
         platforms: [linux]
 
   # * Install Terrascan
