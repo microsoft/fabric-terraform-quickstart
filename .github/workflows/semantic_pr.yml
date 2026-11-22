@@ -5,6 +5,8 @@
 name: 🔍 Semantic PR
 
 on:
+  # Required for comments and WIP statuses on fork PRs. Keep this workflow metadata-only:
+  # never check out PR code, run PR-controlled scripts, or consume PR artifacts/caches.
   pull_request_target:
     branches: ["main"]
     types:
@@ -14,14 +16,16 @@ on:
       - synchronize
       - ready_for_review
 
-permissions:
-  pull-requests: write
-  statuses: write
+permissions: {}
 
 jobs:
   semantic_pr:
     name: Semantic PR
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write # Create, update, and delete PR feedback comments.
+      statuses: write # Preserve the semantic action's WIP status check.
     steps:
       - name: 🔍 Run Semantic PR validation
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
